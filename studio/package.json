@@ -10,7 +10,8 @@
     "build": "sanity build",
     "typegen": "sanity schema extract --path=../frontend/sanity/extract.json && sanity typegen generate",
     "prebuild": "npm run typegen",
-    "predev": "npm run typegen"
+    "predev": "npm run typegen",
+    "clean": "rm -rf .sanity node_modules package-lock.json"
   },
   "keywords": [
     "sanity"
