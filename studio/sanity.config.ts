@@ -4,9 +4,8 @@ import {visionTool} from '@sanity/vision'
 import {schemaTypes} from './schemaTypes'
 
 export default defineConfig({
-  name: 'default',
-  title: 'harrison-knight-molloy',
-
+  title: 'Harri(son) Knight Molloy',
+  name: 'harrison-knight-molloy',
   projectId: 'isbv79ef',
   dataset: 'production',
 
