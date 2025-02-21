@@ -1,4 +1,4 @@
-import {BlockDefinition, BlockSchemaType, defineField, defineType} from 'sanity'
+import {defineField, defineType} from 'sanity'
 import {EnvelopeIcon} from '@sanity/icons'
 
 export default defineType({
