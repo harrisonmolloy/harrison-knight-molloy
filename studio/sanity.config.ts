@@ -20,6 +20,8 @@ export default defineConfig({
   plugins: [
     dashboardTool({widgets: [projectInfoWidget()]}),
     structureTool({
+      name: 'editor',
+      title: 'Editor',
       structure: structure,
     }),
     visionTool(),
