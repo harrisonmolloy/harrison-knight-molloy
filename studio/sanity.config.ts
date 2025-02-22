@@ -3,7 +3,7 @@ import {structureTool} from 'sanity/structure'
 import {visionTool} from '@sanity/vision'
 import {dashboardTool, projectInfoWidget} from '@sanity/dashboard'
 import {schemaTypes} from './schemaTypes'
-import {structure} from './structure'
+import {structureResolver} from './structureResolver'
 
 // Define the actions that should be available for singleton documents
 const singletonActions = new Set(['publish', 'discardChanges', 'restore'])
@@ -20,7 +20,9 @@ export default defineConfig({
   plugins: [
     dashboardTool({widgets: [projectInfoWidget()]}),
     structureTool({
-      structure: structure,
+      name: 'editor',
+      title: 'Editor',
+      structure: structureResolver,
     }),
     visionTool(),
   ],
