@@ -1,9 +1,9 @@
 import { client } from "@/sanity/lib/client";
-import { AUTHOR_QUERY } from "@/sanity/lib/queries";
+import { POST_QUERY } from "@/sanity/lib/queries";
 
 export default async function Home() {
-  const authors = await client.fetch(AUTHOR_QUERY);
-  console.log(authors);
+  const posts = await client.fetch(POST_QUERY);
+  console.log(posts);
 
   return (
     <>
