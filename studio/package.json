@@ -3,18 +3,17 @@
   "private": true,
   "version": "1.0.0",
   "main": "package.json",
-  "license": "UNLICENSED",
   "scripts": {
     "dev": "sanity dev",
     "start": "sanity start",
     "build": "sanity build",
-    "deploy": "sanity deploy",
-    "deploy-graphql": "sanity graphql deploy"
+    "typegen": "sanity schema extract --path=../frontend/sanity/extract.json && sanity typegen generate",
+    "prebuild": "npm run typegen",
+    "predev": "npm run typegen",
+    "clean": "rm -rf .sanity node_modules package-lock.json"
   },
-  "keywords": [
-    "sanity"
-  ],
   "dependencies": {
+    "@sanity/dashboard": "^4.1.2",
     "@sanity/vision": "^3.76.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

@@ -1,4 +1,10 @@
-export default function Home() {
+import { client } from "@/sanity/lib/client";
+import { AUTHOR_QUERY } from "@/sanity/lib/queries";
+
+export default async function Home() {
+  const authors = await client.fetch(AUTHOR_QUERY);
+  console.log(authors);
+
   return (
     <>
       <main className="overflow-hidden pt-[140px] pl-10">
