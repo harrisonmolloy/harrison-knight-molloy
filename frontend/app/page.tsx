@@ -1,17 +1,17 @@
+import { Settings } from "@/sanity.types";
 import { client } from "@/sanity/lib/client";
-import { POST_QUERY } from "@/sanity/lib/queries";
+import { SETTINGS_QUERY } from "@/sanity/lib/queries";
 
 export default async function Home() {
-  const posts = await client.fetch(POST_QUERY);
-  console.log(posts);
+  const settingsData: Settings = await client.fetch(SETTINGS_QUERY);
 
   return (
     <>
       <main className="overflow-hidden pt-[140px] pl-10">
         <h1 className="text-base font-normal leading-5">
-          HARRI(SON) KNIGHT MOLLOY
+          {settingsData.title}
         </h1>
-        <p className="text-base font-normal leading-5">Creative Technologist</p>
+        <p className="text-base font-normal leading-5">{settingsData.tagline}</p>
         <br />
         <a
           href="mailto:mail@harrisonmolloy.com"

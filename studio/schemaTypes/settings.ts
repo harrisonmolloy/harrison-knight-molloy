@@ -13,6 +13,11 @@ export default defineType({
       type: 'string',
     }),
     defineField({
+      name: 'tagline',
+      title: 'Tagline',
+      type: 'text',
+    }),
+    defineField({
       name: 'description',
       title: 'Description',
       type: 'text',

@@ -81,6 +81,7 @@ export type Settings = {
   _updatedAt: string;
   _rev: string;
   title?: string;
+  tagline?: string;
   description?: string;
 };
 
