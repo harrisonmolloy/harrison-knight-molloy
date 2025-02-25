@@ -93,22 +93,13 @@ export type Tag = {
   _rev: string;
   title?: string;
   description?: string;
-  tagType?: {
+  tags?: Array<{
     _ref: string;
     _type: "reference";
     _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "tagType";
-  };
-};
-
-export type TagType = {
-  _id: string;
-  _type: "tagType";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  title?: string;
-  description?: string;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "tag";
+  }>;
 };
 
 export type BlockContent = Array<{
@@ -216,5 +207,5 @@ export type SanityImageMetadata = {
   isOpaque?: boolean;
 };
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Slug | Settings | Tag | TagType | BlockContent | Post | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata;
+export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Slug | Settings | Tag | BlockContent | Post | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata;
 export declare const internalGroqTypeReferenceTo: unique symbol;

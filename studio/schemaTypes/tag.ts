@@ -18,16 +18,10 @@ export default defineType({
       type: 'text',
     }),
     defineField({
-      name: 'tagType',
-      title: 'Tag Type',
-      type: 'reference',
-      to: [{type: 'tagType'}],
+      name: 'tags',
+      title: 'Tags',
+      type: 'array',
+      of: [{type: 'reference', to: {type: 'tag'}}],
     }),
   ],
-  preview: {
-    select: {
-      title: 'title',
-      subtitle: 'tagType.title',
-    },
-  },
 })

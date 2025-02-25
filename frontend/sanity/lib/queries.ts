@@ -7,3 +7,25 @@ export const SETTINGS_QUERY = defineQuery(`*[_id == "settings"][0]{
     tagline,
     description
   }`);
+
+export const POSTS_QUERY = defineQuery(
+  `*[_type == "post"] {
+    _id,
+    title,
+    tags[]-> {
+      _id,
+      title
+    }
+  }`,
+);
+
+export const TAGS_QUERY = defineQuery(
+  `*[_type == "tag"] {
+    _id,
+    title,
+    tags[]-> {
+      _id,
+      title
+    }
+  }`,
+);
