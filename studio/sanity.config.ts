@@ -3,7 +3,7 @@ import {structureTool} from 'sanity/structure'
 import {visionTool} from '@sanity/vision'
 import {dashboardTool, projectInfoWidget} from '@sanity/dashboard'
 import {schemaTypes} from './schemaTypes'
-import {structureResolver} from './structureResolver'
+import {editorStructureResolver, settingsStructureResolver, extendedDocumentNode} from './structure'
 
 // Define the actions that should be available for singleton documents
 const singletonActions = new Set(['publish', 'discardChanges', 'restore'])
@@ -22,7 +22,13 @@ export default defineConfig({
     structureTool({
       name: 'editor',
       title: 'Editor',
-      structure: structureResolver,
+      structure: editorStructureResolver,
+      defaultDocumentNode: extendedDocumentNode,
+    }),
+    structureTool({
+      name: 'setting',
+      title: 'Settings',
+      structure: settingsStructureResolver,
     }),
     visionTool(),
   ],
