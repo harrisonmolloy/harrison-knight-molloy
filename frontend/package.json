@@ -7,7 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "clean": "rm -rf .next node_modules package-lock.json"
+    "format": "npx prettier . --write",
+    "clean": "rm -rf .next node_modules package-lock.json",
+    "prebuild": "npm run lint",
+    "predev": "npm run format && npm run lint"
   },
   "dependencies": {
     "@sanity/image-url": "^1.1.0",
@@ -31,6 +34,9 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.1.7",
+    "eslint-config-prettier": "^10.0.2",
+    "prettier": "^3.5.2",
+    "prettier-plugin-tailwindcss": "^0.6.11",
     "typescript": "^5"
   }
 }

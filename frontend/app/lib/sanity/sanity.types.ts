@@ -102,35 +102,38 @@ export type Tag = {
   }>;
 };
 
-export type BlockContent = Array<{
-  children?: Array<{
-    marks?: Array<string>;
-    text?: string;
-    _type: "span";
-    _key: string;
-  }>;
-  style?: "normal" | "h1" | "h2" | "h3" | "h4" | "blockquote";
-  listItem?: "bullet";
-  markDefs?: Array<{
-    href?: string;
-    _type: "link";
-    _key: string;
-  }>;
-  level?: number;
-  _type: "block";
-  _key: string;
-} | {
-  asset?: {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-  };
-  hotspot?: SanityImageHotspot;
-  crop?: SanityImageCrop;
-  _type: "image";
-  _key: string;
-}>;
+export type BlockContent = Array<
+  | {
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "normal" | "h1" | "h2" | "h3" | "h4" | "blockquote";
+      listItem?: "bullet";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }
+  | {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+      _key: string;
+    }
+>;
 
 export type Post = {
   _id: string;
@@ -207,7 +210,22 @@ export type SanityImageMetadata = {
   isOpaque?: boolean;
 };
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Slug | Config | Tag | BlockContent | Post | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata;
+export type AllSanitySchemaTypes =
+  | SanityImagePaletteSwatch
+  | SanityImagePalette
+  | SanityImageDimensions
+  | SanityFileAsset
+  | Geopoint
+  | Slug
+  | Config
+  | Tag
+  | BlockContent
+  | Post
+  | SanityImageCrop
+  | SanityImageHotspot
+  | SanityImageAsset
+  | SanityAssetSourceData
+  | SanityImageMetadata;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ../frontend/app/lib/sanity/queries.ts
 // Variable: POST_QUERY
@@ -231,19 +249,23 @@ export type POST_QUERYResult = Array<{
 }>;
 // Variable: CONFIG_QUERY
 // Query: *[_id == "config"][0]{    title,    tagline,    description  }
-export type CONFIG_QUERYResult = {
-  title: string | null;
-  tagline: null;
-  description: null;
-} | {
-  title: string | null;
-  tagline: null;
-  description: string | null;
-} | {
-  title: string | null;
-  tagline: string | null;
-  description: string | null;
-} | null;
+export type CONFIG_QUERYResult =
+  | {
+      title: string | null;
+      tagline: null;
+      description: null;
+    }
+  | {
+      title: string | null;
+      tagline: null;
+      description: string | null;
+    }
+  | {
+      title: string | null;
+      tagline: string | null;
+      description: string | null;
+    }
+  | null;
 // Variable: POSTS_QUERY
 // Query: *[_type == "post"] {    _id,    title,    tags[]-> {      _id,      title    }  }
 export type POSTS_QUERYResult = Array<{
@@ -269,9 +291,9 @@ export type TAGS_QUERYResult = Array<{
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "*[_type == \"post\"]": POST_QUERYResult;
-    "*[_id == \"config\"][0]{\n    title,\n    tagline,\n    description\n  }": CONFIG_QUERYResult;
-    "*[_type == \"post\"] {\n    _id,\n    title,\n    tags[]-> {\n      _id,\n      title\n    }\n  }": POSTS_QUERYResult;
-    "*[_type == \"tag\"] {\n    _id,\n    title,\n    tags[]-> {\n      _id,\n      title\n    }\n  }": TAGS_QUERYResult;
+    '*[_type == "post"]': POST_QUERYResult;
+    '*[_id == "config"][0]{\n    title,\n    tagline,\n    description\n  }': CONFIG_QUERYResult;
+    '*[_type == "post"] {\n    _id,\n    title,\n    tags[]-> {\n      _id,\n      title\n    }\n  }': POSTS_QUERYResult;
+    '*[_type == "tag"] {\n    _id,\n    title,\n    tags[]-> {\n      _id,\n      title\n    }\n  }': TAGS_QUERYResult;
   }
 }
