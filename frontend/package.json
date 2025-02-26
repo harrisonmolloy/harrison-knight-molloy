@@ -19,9 +19,9 @@
     "postcss": "^8.5.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "tailwindcss": "^4.0.8",
     "react-force-graph-2d": "^1.27.0",
     "react-force-graph-3d": "^1.26.0",
+    "tailwindcss": "^4.0.8",
     "three-spritetext": "^1.9.4"
   },
   "devDependencies": {
@@ -31,6 +31,9 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.1.7",
+    "eslint-config-prettier": "^10.0.2",
+    "prettier": "^3.5.2",
+    "prettier-plugin-tailwindcss": "^0.6.11",
     "typescript": "^5"
   }
 }
