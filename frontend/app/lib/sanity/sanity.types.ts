@@ -209,3 +209,69 @@ export type SanityImageMetadata = {
 
 export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Slug | Config | Tag | BlockContent | Post | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata;
 export declare const internalGroqTypeReferenceTo: unique symbol;
+// Source: ../frontend/app/lib/sanity/queries.ts
+// Variable: POST_QUERY
+// Query: *[_type == "post"]
+export type POST_QUERYResult = Array<{
+  _id: string;
+  _type: "post";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  body?: BlockContent;
+  tags?: Array<{
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "tag";
+  }>;
+  date?: string;
+}>;
+// Variable: CONFIG_QUERY
+// Query: *[_id == "config"][0]{    title,    tagline,    description  }
+export type CONFIG_QUERYResult = {
+  title: string | null;
+  tagline: null;
+  description: null;
+} | {
+  title: string | null;
+  tagline: null;
+  description: string | null;
+} | {
+  title: string | null;
+  tagline: string | null;
+  description: string | null;
+} | null;
+// Variable: POSTS_QUERY
+// Query: *[_type == "post"] {    _id,    title,    tags[]-> {      _id,      title    }  }
+export type POSTS_QUERYResult = Array<{
+  _id: string;
+  title: string | null;
+  tags: Array<{
+    _id: string;
+    title: string | null;
+  }> | null;
+}>;
+// Variable: TAGS_QUERY
+// Query: *[_type == "tag"] {    _id,    title,    tags[]-> {      _id,      title    }  }
+export type TAGS_QUERYResult = Array<{
+  _id: string;
+  title: string | null;
+  tags: Array<{
+    _id: string;
+    title: string | null;
+  }> | null;
+}>;
+
+// Query TypeMap
+import "@sanity/client";
+declare module "@sanity/client" {
+  interface SanityQueries {
+    "*[_type == \"post\"]": POST_QUERYResult;
+    "*[_id == \"config\"][0]{\n    title,\n    tagline,\n    description\n  }": CONFIG_QUERYResult;
+    "*[_type == \"post\"] {\n    _id,\n    title,\n    tags[]-> {\n      _id,\n      title\n    }\n  }": POSTS_QUERYResult;
+    "*[_type == \"tag\"] {\n    _id,\n    title,\n    tags[]-> {\n      _id,\n      title\n    }\n  }": TAGS_QUERYResult;
+  }
+}
