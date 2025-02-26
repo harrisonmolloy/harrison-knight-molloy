@@ -11,11 +11,11 @@ export const editorStructureResolver = (S: StructureBuilder) =>
       S.divider(),
       S.listItem()
         .title('All')
-        .child(S.documentList().title('All Documents').filter("_id != 'settings'")),
+        .child(S.documentList().title('All Documents').filter("_id != 'config'")),
     ])
 
-export const settingsStructureResolver = (S: StructureBuilder) =>
-  S.editor().id('settings').schemaType('settings').documentId('settings')
+export const configStructureResolver = (S: StructureBuilder) =>
+  S.document().id('config').schemaType('config').documentId('config')
 
 export const extendedDocumentNode = (S: StructureBuilder) =>
   S.document().views([
