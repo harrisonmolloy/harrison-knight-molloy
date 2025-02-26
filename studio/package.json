@@ -7,10 +7,10 @@
     "dev": "sanity dev",
     "start": "sanity start",
     "build": "sanity build",
-    "typegen": "sanity schema extract --path=../frontend/sanity/extract.json && sanity typegen generate",
+    "typegen": "sanity schema extract --path=../frontend/app/lib/sanity/extract.json && sanity typegen generate",
     "prebuild": "npm run typegen",
     "predev": "npm run typegen",
-    "clean": "rm -rf .sanity node_modules package-lock.json"
+    "clean": "rm -rf .sanity node_modules package-lock.json dist"
   },
   "dependencies": {
     "@sanity/dashboard": "^4.1.2",
@@ -18,6 +18,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "sanity": "^3.76.1",
+    "sanity-plugin-documents-pane": "^2.3.0",
     "styled-components": "^6.1.8"
   },
   "devDependencies": {

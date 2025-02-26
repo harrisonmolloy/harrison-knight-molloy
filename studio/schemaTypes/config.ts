@@ -1,16 +1,21 @@
 import {defineField, defineType} from 'sanity'
-import {FolderIcon} from '@sanity/icons'
+// import {FolderIcon} from '@sanity/icons'
 
 export default defineType({
-  name: 'tagType',
-  title: 'Tag Type',
+  name: 'config',
+  title: 'Config',
   type: 'document',
-  icon: FolderIcon,
+  // icon: FolderIcon,
   fields: [
     defineField({
       name: 'title',
       title: 'Title',
       type: 'string',
+    }),
+    defineField({
+      name: 'tagline',
+      title: 'Tagline',
+      type: 'text',
     }),
     defineField({
       name: 'description',

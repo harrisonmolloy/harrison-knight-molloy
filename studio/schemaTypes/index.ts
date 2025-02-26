@@ -1,7 +1,6 @@
 import post from './post'
 import blockContent from './blockContent'
 import tag from './tag'
-import tagType from './tagType'
-import settings from './settings'
+import config from './config'
 
-export const schemaTypes = [post, blockContent, tag, tagType, settings]
+export const schemaTypes = [post, blockContent, tag, config]

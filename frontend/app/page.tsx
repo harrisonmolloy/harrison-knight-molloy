@@ -1,17 +1,14 @@
-import { client } from "@/sanity/lib/client";
-import { AUTHOR_QUERY } from "@/sanity/lib/queries";
+import { client } from "@sanity/client";
+import { CONFIG_QUERY } from "@sanity/queries";
 
 export default async function Home() {
-  const authors = await client.fetch(AUTHOR_QUERY);
-  console.log(authors);
+  const configData = await client.fetch(CONFIG_QUERY);
 
   return (
     <>
       <main className="overflow-hidden pt-[140px] pl-10">
-        <h1 className="text-base font-normal leading-5">
-          HARRI(SON) KNIGHT MOLLOY
-        </h1>
-        <p className="text-base font-normal leading-5">Creative Technologist</p>
+        <h1 className="text-base font-normal leading-5">{configData.title}</h1>
+        <p className="text-base font-normal leading-5">{configData.tagline}</p>
         <br />
         <a
           href="mailto:mail@harrisonmolloy.com"

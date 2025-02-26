@@ -23,9 +23,6 @@ export default defineType({
       title: 'Tags',
       type: 'array',
       of: [{type: 'reference', to: {type: 'tag'}}],
-      options: {
-        layout: 'tags',
-      },
     }),
     defineField({
       name: 'date',
