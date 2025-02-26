@@ -6,7 +6,7 @@ export default async function Home() {
 
   return (
     <>
-      <main className="overflow-hidden pt-[140px] pl-10">
+      <main className="overflow-hidden pt-40 pl-10">
         <h1 className="text-base font-normal leading-5">{configData.title}</h1>
         <p className="text-base font-normal leading-5">{configData.tagline}</p>
         <br />

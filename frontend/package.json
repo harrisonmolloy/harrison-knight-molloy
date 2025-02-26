@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@sanity/image-url": "^1.1.0",
-    "@tailwindcss/postcss": "^4.0.8",
+    "@tailwindcss/postcss": "^4.0.9",
     "@vercel/analytics": "^1.5.0",
     "@vercel/speed-insights": "^1.2.0",
     "next": "15.1.7",
@@ -19,9 +19,9 @@
     "postcss": "^8.5.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "tailwindcss": "^4.0.8",
     "react-force-graph-2d": "^1.27.0",
     "react-force-graph-3d": "^1.26.0",
+    "tailwindcss": "^4.0.9",
     "three-spritetext": "^1.9.4"
   },
   "devDependencies": {
