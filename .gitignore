@@ -128,9 +128,6 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-yarn.lock
-package-lock.json
-
 *.iml
 .idea/
 .vercel
@@ -166,7 +163,6 @@ package-lock.json
 
 # Dotenv and similar local-only files
 *.local
-
 
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 

@@ -2,7 +2,6 @@
   "name": "harrison-knight-molloy-studio",
   "private": true,
   "version": "1.0.0",
-  "main": "package.json",
   "scripts": {
     "dev": "sanity dev",
     "start": "sanity start",
@@ -10,7 +9,7 @@
     "typegen": "sanity schema extract --path=../frontend/app/lib/sanity/extract.json && sanity typegen generate",
     "prebuild": "npm run typegen",
     "predev": "npm run typegen",
-    "clean": "rm -rf .sanity node_modules package-lock.json dist"
+    "clean": "rm -rf .sanity node_modules dist"
   },
   "dependencies": {
     "@sanity/dashboard": "^4.1.2",
