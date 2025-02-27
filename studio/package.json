@@ -22,15 +22,12 @@
   },
   "devDependencies": {
     "@sanity/eslint-config-studio": "^5.0.1",
+    "@sanity/prettier-config": "^1.0.3",
     "@types/react": "^18.0.25",
     "eslint": "^9.9.0",
     "prettier": "^3.0.2",
+    "prettier-plugin-tailwindcss": "^0.6.11",
     "typescript": "^5.1.6"
   },
-  "prettier": {
-    "semi": false,
-    "printWidth": 100,
-    "bracketSpacing": false,
-    "singleQuote": true
-  }
+  "prettier": "@sanity/prettier-config"
 }
