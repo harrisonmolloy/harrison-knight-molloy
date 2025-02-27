@@ -18,7 +18,7 @@
     "@vercel/analytics": "^1.5.0",
     "@vercel/speed-insights": "^1.2.0",
     "next": "^15.2.0",
-    "next-sanity": "^0.8.5",
+    "next-sanity": "^9.8.60",
     "postcss": "^8.5.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
