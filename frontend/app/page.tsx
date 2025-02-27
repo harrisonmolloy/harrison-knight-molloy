@@ -1,5 +1,5 @@
 import { client } from "@sanity/client";
-import { CONFIG_QUERY } from "@sanity/queries";
+import { CONFIG_QUERY } from "@/app/lib/sanity/queries";
 
 export default async function Home() {
   const configData = await client.fetch(CONFIG_QUERY);

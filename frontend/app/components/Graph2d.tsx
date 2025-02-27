@@ -2,9 +2,12 @@
 
 import { useState, useEffect } from "react";
 import { client } from "@sanity/client";
-import { POSTS_QUERY, TAGS_QUERY } from "@sanity/queries";
+import { POSTS_QUERY, TAGS_QUERY } from "@/app/lib/sanity/queries";
 import ForceGraph2D from "react-force-graph-2d";
-import { POSTS_QUERYResult, TAGS_QUERYResult } from "@sanity/sanity.types";
+import {
+  POSTS_QUERYResult,
+  TAGS_QUERYResult,
+} from "@/app/lib/sanity/sanity.types";
 
 export default function Graph2d() {
   const [data, setData] = useState<{

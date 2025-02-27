@@ -18,10 +18,12 @@
         "name": "next"
       }
     ],
+    "baseUrl": ".",
     "paths": {
       "@/*": ["./*"],
-      "@components/*": ["./app/lib/components/*"],
-      "@sanity/*": ["./app/lib/sanity/*"]
+      "@components/*": ["app/components/*"],
+      "@sanity/*": ["app/lib/sanity/*"],
+      "@lib/*": ["app/lib/*"]
     }
   },
   "include": [
