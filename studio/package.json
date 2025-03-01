@@ -1,16 +1,17 @@
 {
   "name": "harrison-knight-molloy-studio",
-  "private": true,
   "version": "1.0.0",
+  "private": true,
   "scripts": {
+    "prebuild": "npm run typegen",
+    "build": "sanity build",
+    "clean": "rm -rf .sanity node_modules dist",
+    "predev": "npm run typegen",
     "dev": "sanity dev",
     "start": "sanity start",
-    "build": "sanity build",
-    "typegen": "sanity schema extract --path=../frontend/app/lib/sanity/extract.json && sanity typegen generate",
-    "prebuild": "npm run typegen",
-    "predev": "npm run typegen",
-    "clean": "rm -rf .sanity node_modules dist"
+    "typegen": "sanity schema extract --enforce-required-fields && sanity typegen generate"
   },
+  "prettier": "@sanity/prettier-config",
   "dependencies": {
     "@sanity/dashboard": "^4.1.2",
     "@sanity/vision": "^3.76.1",
@@ -28,6 +29,5 @@
     "prettier": "^3.0.2",
     "prettier-plugin-tailwindcss": "^0.6.11",
     "typescript": "^5.1.6"
-  },
-  "prettier": "@sanity/prettier-config"
+  }
 }

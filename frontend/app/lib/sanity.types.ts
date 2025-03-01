@@ -70,7 +70,7 @@ export type Geopoint = {
 
 export type Slug = {
   _type: "slug";
-  current?: string;
+  current: string;
   source?: string;
 };
 
@@ -80,7 +80,7 @@ export type Config = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  title?: string;
+  title: string;
   tagline?: string;
   description?: string;
 };
@@ -91,7 +91,7 @@ export type Tag = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  title?: string;
+  title: string;
   description?: string;
   tags?: Array<{
     _ref: string;
@@ -227,63 +227,41 @@ export type AllSanitySchemaTypes =
   | SanityAssetSourceData
   | SanityImageMetadata;
 export declare const internalGroqTypeReferenceTo: unique symbol;
-// Source: ../frontend/app/lib/sanity/queries.ts
-// Variable: POST_QUERY
-// Query: *[_type == "post"]
-export type POST_QUERYResult = Array<{
-  _id: string;
-  _type: "post";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  title?: string;
-  body?: BlockContent;
-  tags?: Array<{
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    _key: string;
-    [internalGroqTypeReferenceTo]?: "tag";
-  }>;
-  date?: string;
-}>;
+// Source: ../frontend/app/lib/queries.ts
 // Variable: CONFIG_QUERY
-// Query: *[_id == "config"][0]{    title,    tagline,    description  }
-export type CONFIG_QUERYResult =
-  | {
-      title: string | null;
-      tagline: null;
-      description: null;
-    }
-  | {
-      title: string | null;
-      tagline: null;
-      description: string | null;
-    }
-  | {
-      title: string | null;
-      tagline: string | null;
-      description: string | null;
-    }
-  | null;
+// Query: *[_type == "config" && _id == "config"][0]{ title, tagline, description }
+export type CONFIG_QUERYResult = {
+  title: string;
+  tagline: string | null;
+  description: string | null;
+} | null;
 // Variable: POSTS_QUERY
-// Query: *[_type == "post"] {    _id,    title,    tags[]-> {      _id,      title    }  }
+// Query: *[_type == "post"] { _id, _type, title, date, body, tags[]-> { _id, _type, title }}
 export type POSTS_QUERYResult = Array<{
   _id: string;
+  _type: "post";
   title: string | null;
+  date: string | null;
+  body: BlockContent | null;
   tags: Array<{
     _id: string;
-    title: string | null;
+    _type: "tag";
+    title: string;
   }> | null;
 }>;
+// Variable: POST_QUERY
+// Query: *[_type == "post" && _id == id]
+export type POST_QUERYResult = Array<never>;
 // Variable: TAGS_QUERY
-// Query: *[_type == "tag"] {    _id,    title,    tags[]-> {      _id,      title    }  }
+// Query: *[_type == "tag"] { _id, _type, title, tags[]-> { _id, _type, title }}
 export type TAGS_QUERYResult = Array<{
   _id: string;
-  title: string | null;
+  _type: "tag";
+  title: string;
   tags: Array<{
     _id: string;
-    title: string | null;
+    _type: "tag";
+    title: string;
   }> | null;
 }>;
 
@@ -291,9 +269,9 @@ export type TAGS_QUERYResult = Array<{
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    '*[_type == "post"]': POST_QUERYResult;
-    '*[_id == "config"][0]{\n    title,\n    tagline,\n    description\n  }': CONFIG_QUERYResult;
-    '*[_type == "post"] {\n    _id,\n    title,\n    tags[]-> {\n      _id,\n      title\n    }\n  }': POSTS_QUERYResult;
-    '*[_type == "tag"] {\n    _id,\n    title,\n    tags[]-> {\n      _id,\n      title\n    }\n  }': TAGS_QUERYResult;
+    '*[_type == "config" && _id == "config"][0]{ title, tagline, description }': CONFIG_QUERYResult;
+    '*[_type == "post"] { _id, _type, title, date, body, tags[]-> { _id, _type, title }}': POSTS_QUERYResult;
+    '*[_type == "post" && _id == id]': POST_QUERYResult;
+    '*[_type == "tag"] { _id, _type, title, tags[]-> { _id, _type, title }}': TAGS_QUERYResult;
   }
 }
