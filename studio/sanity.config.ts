@@ -5,12 +5,6 @@ import {dashboardTool, projectInfoWidget} from '@sanity/dashboard'
 import {schemaTypes} from './schemaTypes'
 import {editorStructureResolver, configStructureResolver, extendedDocumentNode} from './structure'
 
-// Define the actions that should be available for singleton documents
-const singletonActions = new Set(['publish', 'discardChanges', 'restore'])
-
-// Define the singleton document types
-const singletonTypes = new Set(['settings'])
-
 export default defineConfig({
   title: 'Harri(son) Knight Molloy',
   name: 'harrison-knight-molloy',
