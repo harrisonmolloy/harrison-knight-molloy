@@ -5,7 +5,6 @@ export default defineType({
   name: 'config',
   title: 'Config',
   type: 'document',
-  // icon: FolderIcon,
   icon: CogIcon,
   fields: [
     defineField({
