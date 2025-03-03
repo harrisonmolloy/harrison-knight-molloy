@@ -5,11 +5,5 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <html lang="en">
-      <body>
-        <CardContainer>{children}</CardContainer>
-      </body>
-    </html>
-  );
+  return <CardContainer>{children}</CardContainer>;
 }
