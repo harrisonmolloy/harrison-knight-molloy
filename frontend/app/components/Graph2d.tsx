@@ -3,6 +3,7 @@
 import dynamic from "next/dynamic";
 import { GraphData } from "lib/graphDataTypes";
 
+// Hold off rendering component until window is defined.
 const ForceGraph2D = dynamic(() => import("react-force-graph-2d"), {
   ssr: false,
 });
