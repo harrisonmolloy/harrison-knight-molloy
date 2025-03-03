@@ -1,30 +1,18 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import ForceGraph3D from "react-force-graph-3d";
+import dynamic from "next/dynamic";
+
+import { GraphData } from "lib/graphDataTypes";
 import SpriteText from "three-spritetext";
 
-import { fetchGraphData } from "lib/fetchGraphData";
+const ForceGraph3D = dynamic(() => import("react-force-graph-3d"), {
+  ssr: false,
+});
 
-export default function Graph3d() {
-  const [data, setData] = useState<{
-    nodes: { id: string; name: string }[];
-    links: { source: string; target: string }[];
-  } | null>(null);
-
-  useEffect(() => {
-    async function fetchData() {
-      const data = await fetchGraphData();
-      setData(data);
-    }
-    fetchData();
-  }, []);
-
-  if (!data) return <></>;
-
+export function Graph3d({ graphData }: { graphData: GraphData }) {
   return (
     <ForceGraph3D
-      graphData={data}
+      graphData={graphData}
       nodeAutoColorBy="type"
       nodeThreeObject={(node: { name: string | undefined; type: string }) => {
         const sprite = new SpriteText(node.name);

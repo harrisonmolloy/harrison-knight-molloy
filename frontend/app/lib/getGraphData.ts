@@ -1,7 +1,7 @@
 import { Node, Link } from "lib/graphDataTypes";
 import { getPosts, getTags } from "lib/queries";
 
-export async function fetchGraphData() {
+export async function getGraphData() {
   const tags = await getTags();
   const posts = await getPosts();
 

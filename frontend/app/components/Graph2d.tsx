@@ -1,20 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { fetchGraphData } from "lib/fetchGraphData";
+import dynamic from "next/dynamic";
 import { GraphData } from "lib/graphDataTypes";
 
-import ForceGraph2D from "react-force-graph-2d";
+const ForceGraph2D = dynamic(() => import("react-force-graph-2d"), {
+  ssr: false,
+});
 
-export default function Graph2d() {
-  const [graphData, setGraphData] = useState<GraphData>();
-
-  useEffect(() => {
-    fetchGraphData().then((graphData) => setGraphData(graphData));
-  }, []);
-
-  if (!graphData) return <></>;
-
+export function Graph2d({ graphData }: { graphData: GraphData }) {
   return (
     <ForceGraph2D
       graphData={graphData}

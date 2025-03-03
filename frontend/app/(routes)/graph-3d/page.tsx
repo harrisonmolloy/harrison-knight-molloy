@@ -1,11 +1,7 @@
-"use client";
+import { Graph3d } from "@/app/components/Graph3d";
+import { getGraphData } from "@/app/lib/getGraphData";
 
-import dynamic from "next/dynamic";
-
-const Graph3d = dynamic(() => import("@/app/components/Graph3d"), {
-  ssr: false,
-});
-
-export default function Home() {
-  return <Graph3d />;
+export default async function Home() {
+  const graphData = await getGraphData();
+  return <Graph3d graphData={graphData} />;
 }

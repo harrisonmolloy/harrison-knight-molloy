@@ -1,11 +1,7 @@
-"use client";
+import { Graph2d } from "@/app/components/Graph2d";
+import { getGraphData } from "@/app/lib/getGraphData";
 
-import dynamic from "next/dynamic";
-
-const Graph2d = dynamic(() => import("@/app/components/Graph2d"), {
-  ssr: false,
-});
-
-export default function Home() {
-  return <Graph2d />;
+export default async function Home() {
+  const graphData = await getGraphData();
+  return <Graph2d graphData={graphData} />;
 }
