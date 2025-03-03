@@ -1,5 +1,5 @@
-import { Graph3d } from "@/app/components/Graph3d";
-import { getGraphData } from "@/app/lib/getGraphData";
+import { Graph3d } from "components/Graph3d";
+import { getGraphData } from "lib/getGraphData";
 
 export default async function Home() {
   const graphData = await getGraphData();

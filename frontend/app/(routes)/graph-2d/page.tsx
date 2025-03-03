@@ -1,5 +1,5 @@
-import { Graph2d } from "@/app/components/Graph2d";
-import { getGraphData } from "@/app/lib/getGraphData";
+import { Graph2d } from "components/Graph2d";
+import { getGraphData } from "lib/getGraphData";
 
 export default async function Home() {
   const graphData = await getGraphData();
