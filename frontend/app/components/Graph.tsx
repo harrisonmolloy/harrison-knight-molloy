@@ -1,13 +1,7 @@
 import { getGraphData } from "lib/getGraphData";
-
-import { Graph3d } from "components/Graph3d";
 import { Graph2d } from "components/Graph2d";
 
-export async function Graph({ threeD = false }: { threeD?: boolean }) {
+export async function Graph() {
   const graphData = await getGraphData();
-  return threeD ? (
-    <Graph3d graphData={graphData} />
-  ) : (
-    <Graph2d graphData={graphData} />
-  );
+  return <Graph2d graphData={graphData} />;
 }
