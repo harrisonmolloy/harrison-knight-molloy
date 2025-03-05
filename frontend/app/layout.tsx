@@ -3,7 +3,6 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
 import { Nav } from "components/Nav";
 import { NavButton } from "components/NavButton";
-import { Main } from "components/Main";
 
 import "./globals.css";
 
