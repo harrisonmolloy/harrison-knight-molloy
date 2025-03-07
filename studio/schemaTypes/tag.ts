@@ -24,5 +24,16 @@ export default defineType({
       type: 'array',
       of: [{type: 'reference', to: {type: 'tag'}}],
     }),
+    defineField({
+      name: 'slug',
+      title: 'Slug',
+      type: 'slug',
+      options: {
+        source: 'title',
+        maxLength: 200, // will be ignored if slugify is set
+        slugify: (input) => input.toLowerCase().replace(/\s+/g, '-').slice(0, 200),
+      },
+      validation: (rule) => rule.required(),
+    }),
   ],
 })

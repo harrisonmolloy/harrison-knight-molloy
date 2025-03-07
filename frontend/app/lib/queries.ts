@@ -11,7 +11,7 @@ export async function getConfig() {
 
 export async function getPosts() {
   const POSTS_QUERY = defineQuery(
-    `*[_type == "post"] { _id, _type, title, date, body, tags[]-> { _id, _type, title }}`,
+    `*[_type == "post"] { _id, _type, title, date, body, tags[]-> { _id, _type, title, slug }}`,
   );
   const result = await client.fetch(POSTS_QUERY);
   return result;
@@ -25,8 +25,17 @@ export async function getPost() {
 
 export async function getTags() {
   const TAGS_QUERY = defineQuery(
-    `*[_type == "tag"] { _id, _type, title, tags[]-> { _id, _type, title }}`,
+    `*[_type == "tag"] { _id, _type, title, slug, tags[]-> { _id, _type, title, slug }}`,
   );
   const result = await client.fetch(TAGS_QUERY);
+  return result;
+}
+
+export async function getPostsByTag(tagName: string) {
+  const params = { tagName };
+  const POSTS_BY_TAGS_QUERY = defineQuery(
+    `*[_type == "post" && references(*[_type=="tag" && title match $tagName]._id)] { _id, _type, title, date, body, tags[]-> { _id, _type, title, slug }}`,
+  );
+  const result = await client.fetch(POSTS_BY_TAGS_QUERY, params);
   return result;
 }
