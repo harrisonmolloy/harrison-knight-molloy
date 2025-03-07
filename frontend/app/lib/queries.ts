@@ -1,6 +1,5 @@
 import { client } from "lib/client";
-import { defineQuery, groq, QueryParams } from "next-sanity";
-import { POSTS_BY_TAGS_QUERYResult } from "./sanity.types";
+import { defineQuery } from "next-sanity";
 
 export async function getConfig() {
   const CONFIG_QUERY = defineQuery(
