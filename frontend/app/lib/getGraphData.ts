@@ -10,10 +10,10 @@ export async function getGraphData() {
   const links: Link[] = [];
 
   // Helper to add unique nodes
-  const addNodeUnique = ({ id, name, type }: Node) => {
+  const addNodeUnique = ({ id, name, type, slug }: Node) => {
     if (!nodeIds.has(id)) {
       nodeIds.add(id);
-      nodes.push({ id, name, type });
+      nodes.push({ id, name, type, slug });
     }
   };
 
@@ -34,6 +34,7 @@ export async function getGraphData() {
         id: postTag._id,
         type: postTag._type,
         name: postTag.title,
+        slug: postTag.slug.current,
       });
 
       addLink({
@@ -48,6 +49,7 @@ export async function getGraphData() {
       id: tag._id,
       type: tag._type,
       name: tag.title,
+      slug: tag.slug.current,
     });
 
     tag.tags?.forEach((tagTag) => {
@@ -55,6 +57,7 @@ export async function getGraphData() {
         id: tagTag._id,
         type: tagTag._type,
         name: tagTag.title,
+        slug: tagTag.slug.current,
       });
       addLink({
         source: tagTag._id,

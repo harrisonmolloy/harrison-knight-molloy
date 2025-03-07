@@ -7,6 +7,7 @@ export interface Node {
   id: string;
   name: string;
   type: string;
+  slug?: string;
 }
 
 export interface Link {

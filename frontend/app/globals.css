@@ -1,7 +1,17 @@
 @import "tailwindcss";
 
-body {
-  color: #0b112c;
-  background: gainsboro;
-  font-family: Helvetica, sans-serif;
+@theme {
+  --font-base: var(--font-mono);
+}
+
+@layer base {
+  p,
+  a,
+  h1,
+  h2,
+  h3,
+  div {
+    font-size: var(--text-sm);
+    text-transform: uppercase;
+  }
 }
