@@ -3,7 +3,8 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
-import { GraphData, Node } from "lib/graphDataTypes";
+import { GraphData } from "lib/graphDataTypes";
+import { NodeObject } from "react-force-graph-2d";
 
 // Hold off rendering component until window is defined.
 const ForceGraph2D = dynamic(() => import("react-force-graph-2d"), {
@@ -29,7 +30,7 @@ export function Graph2d({ graphData }: { graphData: GraphData }) {
   }
 
   const handleClick = useCallback(
-    (node: Node) => {
+    (node: NodeObject) => {
       if (node.slug) {
         router.push("/posts/" + node.slug);
       }

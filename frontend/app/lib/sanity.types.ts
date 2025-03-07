@@ -269,7 +269,7 @@ export type TAGS_QUERYResult = Array<{
   }> | null;
 }>;
 // Variable: POSTS_BY_TAGS_QUERY
-// Query: *[_type == "post" && references(*[_type=="tag" && title match $tag]._id)] { _id, _type, title, date, body, tags[]-> { _id, _type, title, slug }}
+// Query: *[_type == "post" && references(*[_type=="tag" && title match $tagName]._id)] { _id, _type, title, date, body, tags[]-> { _id, _type, title, slug }}
 export type POSTS_BY_TAGS_QUERYResult = Array<{
   _id: string;
   _type: "post";
@@ -292,6 +292,6 @@ declare module "@sanity/client" {
     '*[_type == "post"] { _id, _type, title, date, body, tags[]-> { _id, _type, title, slug }}': POSTS_QUERYResult;
     '*[_type == "post" && _id == id]': POST_QUERYResult;
     '*[_type == "tag"] { _id, _type, title, slug, tags[]-> { _id, _type, title, slug }}': TAGS_QUERYResult;
-    '*[_type == "post" && references(*[_type=="tag" && title match $tag]._id)] { _id, _type, title, date, body, tags[]-> { _id, _type, title, slug }}': POSTS_BY_TAGS_QUERYResult;
+    '*[_type == "post" && references(*[_type=="tag" && title match $tagName]._id)] { _id, _type, title, date, body, tags[]-> { _id, _type, title, slug }}': POSTS_BY_TAGS_QUERYResult;
   }
 }

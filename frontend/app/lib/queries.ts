@@ -31,10 +31,10 @@ export async function getTags() {
   return result;
 }
 
-export async function getPostsByTag(tag: string) {
-  const params = { tag: tag };
+export async function getPostsByTag(tagName: string) {
+  const params = { tagName };
   const POSTS_BY_TAGS_QUERY = defineQuery(
-    `*[_type == "post" && references(*[_type=="tag" && title match $tag]._id)] { _id, _type, title, date, body, tags[]-> { _id, _type, title, slug }}`,
+    `*[_type == "post" && references(*[_type=="tag" && title match $tagName]._id)] { _id, _type, title, date, body, tags[]-> { _id, _type, title, slug }}`,
   );
   const result = await client.fetch(POSTS_BY_TAGS_QUERY, params);
   return result;
