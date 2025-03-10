@@ -1,5 +1,5 @@
-import {defineField, defineType} from 'sanity'
-import {EnvelopeIcon} from '@sanity/icons'
+import { defineField, defineType } from 'sanity'
+import { EnvelopeIcon } from '@sanity/icons'
 
 export default defineType({
   name: 'post',
@@ -17,6 +17,7 @@ export default defineType({
       name: 'body',
       title: 'Body',
       type: 'blockContent',
+      validation: (rule) => rule.required(),
     }),
     defineField({
       name: 'tags',
@@ -29,6 +30,17 @@ export default defineType({
       title: 'Date',
       type: 'datetime',
       initialValue: new Date().toISOString(),
+    }),
+    defineField({
+      name: 'slug',
+      title: 'Slug',
+      type: 'slug',
+      options: {
+        source: 'title',
+        maxLength: 200, // will be ignored if slugify is set
+        slugify: (input) => input.toLowerCase().replace(/\s+/g, '-').slice(0, 200),
+      },
+      validation: (rule) => rule.required(),
     }),
   ],
 })

@@ -1,7 +1,7 @@
 import { Card } from "components/Card";
 import { CardRow } from "components/CardRow";
-import { toPlainText } from "lib/toPlainText";
 import { POSTS_QUERYResult } from "lib/sanity.types";
+import { Blocks } from "components/Blocks";
 import Link from "next/link";
 
 export function Post({ post }: { post: POSTS_QUERYResult[0] }) {
@@ -15,7 +15,8 @@ export function Post({ post }: { post: POSTS_QUERYResult[0] }) {
         <h2>{post.title}</h2>
         <p>{date}</p>
       </CardRow>
-      <CardRow>{toPlainText(post.body || null)}</CardRow>
+
+      <Body post={post} />
       <CardRow>
         {post.tags?.map((tag) => (
           <Link
@@ -29,4 +30,10 @@ export function Post({ post }: { post: POSTS_QUERYResult[0] }) {
       </CardRow>
     </Card>
   );
+}
+
+function Body({ post }: { post: POSTS_QUERYResult[0] }) {
+  if (post.body) {
+    return <Blocks blocks={post.body} />;
+  }
 }

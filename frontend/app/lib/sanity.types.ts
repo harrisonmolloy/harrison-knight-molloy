@@ -68,6 +68,19 @@ export type Geopoint = {
   alt?: number;
 };
 
+export type BlockImage = {
+  _type: "blockImage";
+  asset?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+  };
+  hotspot?: SanityImageHotspot;
+  crop?: SanityImageCrop;
+  alt: string;
+};
+
 export type Config = {
   _id: string;
   _type: "config";
@@ -95,12 +108,6 @@ export type Tag = {
     [internalGroqTypeReferenceTo]?: "tag";
   }>;
   slug: Slug;
-};
-
-export type Slug = {
-  _type: "slug";
-  current: string;
-  source?: string;
 };
 
 export type BlockContent = Array<
@@ -131,7 +138,8 @@ export type BlockContent = Array<
       };
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
-      _type: "image";
+      alt: string;
+      _type: "blockImage";
       _key: string;
     }
 >;
@@ -143,7 +151,7 @@ export type Post = {
   _updatedAt: string;
   _rev: string;
   title?: string;
-  body?: BlockContent;
+  body: BlockContent;
   tags?: Array<{
     _ref: string;
     _type: "reference";
@@ -152,6 +160,13 @@ export type Post = {
     [internalGroqTypeReferenceTo]?: "tag";
   }>;
   date?: string;
+  slug: Slug;
+};
+
+export type Slug = {
+  _type: "slug";
+  current: string;
+  source?: string;
 };
 
 export type SanityImageCrop = {
@@ -217,11 +232,12 @@ export type AllSanitySchemaTypes =
   | SanityImageDimensions
   | SanityFileAsset
   | Geopoint
+  | BlockImage
   | Config
   | Tag
-  | Slug
   | BlockContent
   | Post
+  | Slug
   | SanityImageCrop
   | SanityImageHotspot
   | SanityImageAsset
@@ -237,13 +253,63 @@ export type CONFIG_QUERYResult = {
   description: string | null;
 } | null;
 // Variable: POSTS_QUERY
-// Query: *[_type == "post"] { _id, _type, title, date, body, tags[]-> { _id, _type, title, slug }}
+// Query: *[_type == "post"] {      _id,      _type,      title,      date,      body[] {        ...,        asset-> {          ...,          "_key": _id        }      },      tags[]-> {        _id,        _type,        title,        slug      }    }
 export type POSTS_QUERYResult = Array<{
   _id: string;
   _type: "post";
   title: string | null;
   date: string | null;
-  body: BlockContent | null;
+  body: Array<
+    | {
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
+        listItem?: "bullet";
+        markDefs?: Array<{
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+        asset: null;
+      }
+    | {
+        asset: {
+          _id: string;
+          _type: "sanity.imageAsset";
+          _createdAt: string;
+          _updatedAt: string;
+          _rev: string;
+          originalFilename?: string;
+          label?: string;
+          title?: string;
+          description?: string;
+          altText?: string;
+          sha1hash?: string;
+          extension?: string;
+          mimeType?: string;
+          size?: number;
+          assetId?: string;
+          uploadId?: string;
+          path?: string;
+          url?: string;
+          metadata?: SanityImageMetadata;
+          source?: SanityAssetSourceData;
+          _key: string;
+        } | null;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt: string;
+        _type: "blockImage";
+        _key: string;
+      }
+  >;
   tags: Array<{
     _id: string;
     _type: "tag";
@@ -252,7 +318,7 @@ export type POSTS_QUERYResult = Array<{
   }> | null;
 }>;
 // Variable: POST_QUERY
-// Query: *[_type == "post" && _id == id]
+// Query: *[_type == "post" && _id == id]{    _id,    _type,    title,    date,    body[] {      ...,      asset-> {        ...,        "_key": _id      }    },    tags[]-> {      _id,      _type,      title,      slug    }  }
 export type POST_QUERYResult = Array<never>;
 // Variable: TAGS_QUERY
 // Query: *[_type == "tag"] { _id, _type, title, slug, tags[]-> { _id, _type, title, slug }}
@@ -269,13 +335,63 @@ export type TAGS_QUERYResult = Array<{
   }> | null;
 }>;
 // Variable: POSTS_BY_TAGS_QUERY
-// Query: *[_type == "post" && references(*[_type=="tag" && title match $tagName]._id)] { _id, _type, title, date, body, tags[]-> { _id, _type, title, slug }}
+// Query: *[_type == "post" && references(*[_type=="tag" && title match $tagName]._id)] {      _id,      _type,      title,      date,      body[] {        ...,        asset-> {          ...,          "_key": _id        }      },      tags[]-> {        _id,        _type,        title,        slug      }    }
 export type POSTS_BY_TAGS_QUERYResult = Array<{
   _id: string;
   _type: "post";
   title: string | null;
   date: string | null;
-  body: BlockContent | null;
+  body: Array<
+    | {
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
+        listItem?: "bullet";
+        markDefs?: Array<{
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+        asset: null;
+      }
+    | {
+        asset: {
+          _id: string;
+          _type: "sanity.imageAsset";
+          _createdAt: string;
+          _updatedAt: string;
+          _rev: string;
+          originalFilename?: string;
+          label?: string;
+          title?: string;
+          description?: string;
+          altText?: string;
+          sha1hash?: string;
+          extension?: string;
+          mimeType?: string;
+          size?: number;
+          assetId?: string;
+          uploadId?: string;
+          path?: string;
+          url?: string;
+          metadata?: SanityImageMetadata;
+          source?: SanityAssetSourceData;
+          _key: string;
+        } | null;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt: string;
+        _type: "blockImage";
+        _key: string;
+      }
+  >;
   tags: Array<{
     _id: string;
     _type: "tag";
@@ -289,9 +405,9 @@ import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     '*[_type == "config" && _id == "config"][0]{ title, tagline, description }': CONFIG_QUERYResult;
-    '*[_type == "post"] { _id, _type, title, date, body, tags[]-> { _id, _type, title, slug }}': POSTS_QUERYResult;
-    '*[_type == "post" && _id == id]': POST_QUERYResult;
+    '*[_type == "post"] {\n      _id,\n      _type,\n      title,\n      date,\n      body[] {\n        ...,\n        asset-> {\n          ...,\n          "_key": _id\n        }\n      },\n      tags[]-> {\n        _id,\n        _type,\n        title,\n        slug\n      }\n    }': POSTS_QUERYResult;
+    '*[_type == "post" && _id == id]{\n    _id,\n    _type,\n    title,\n    date,\n    body[] {\n      ...,\n      asset-> {\n        ...,\n        "_key": _id\n      }\n    },\n    tags[]-> {\n      _id,\n      _type,\n      title,\n      slug\n    }\n  }': POST_QUERYResult;
     '*[_type == "tag"] { _id, _type, title, slug, tags[]-> { _id, _type, title, slug }}': TAGS_QUERYResult;
-    '*[_type == "post" && references(*[_type=="tag" && title match $tagName]._id)] { _id, _type, title, date, body, tags[]-> { _id, _type, title, slug }}': POSTS_BY_TAGS_QUERYResult;
+    '*[_type == "post" && references(*[_type=="tag" && title match $tagName]._id)] {\n      _id,\n      _type,\n      title,\n      date,\n      body[] {\n        ...,\n        asset-> {\n          ...,\n          "_key": _id\n        }\n      },\n      tags[]-> {\n        _id,\n        _type,\n        title,\n        slug\n      }\n    }': POSTS_BY_TAGS_QUERYResult;
   }
 }
