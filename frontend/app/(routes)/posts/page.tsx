@@ -1,13 +1,10 @@
-import { Post } from "@/app/components/Post";
-import { getPosts } from "lib/queries";
+import { PostList } from "@/app/components/PostList";
 
-export default async function posts() {
-  const posts = await getPosts();
+export default function posts() {
   return (
     <>
-      {posts.map((post) => (
-        <Post key={post._id} post={post} />
-      ))}
+      <h1>All Posts</h1>
+      <PostList />
     </>
   );
 }

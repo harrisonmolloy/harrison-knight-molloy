@@ -9,7 +9,7 @@ export function NavButton({
 }) {
   return (
     <Link
-      className="rounded-2xl bg-black px-3 py-1 text-gray-100 opacity-95 drop-shadow-sm transition-all duration-500 hover:rotate-3 hover:drop-shadow-xl"
+      className="rounded-2xl bg-black px-3 py-1 text-gray-100 opacity-95 drop-shadow-xs transition-all duration-500 hover:rotate-3 hover:drop-shadow-sm"
       href={{ pathname: href }}
     >
       {children}

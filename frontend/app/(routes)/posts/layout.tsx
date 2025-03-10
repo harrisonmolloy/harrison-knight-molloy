@@ -1,4 +1,4 @@
-import CardContainer from "components/CardContainer";
+import { CardContainer } from "components/CardContainer";
 
 export default function RootLayout({
   children,

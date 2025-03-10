@@ -9,7 +9,6 @@ export default async function Page({
 }) {
   const { tag } = await params;
   const posts = await getPostsByTag(tag);
-  console.log(tag);
   return (
     <>
       <h1>{tag}</h1>

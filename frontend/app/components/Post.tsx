@@ -1,4 +1,5 @@
-import { Card, CardRow } from "components/Card";
+import { Card } from "components/Card";
+import { CardRow } from "components/CardRow";
 import { toPlainText } from "lib/toPlainText";
 import { POSTS_QUERYResult } from "lib/sanity.types";
 import Link from "next/link";

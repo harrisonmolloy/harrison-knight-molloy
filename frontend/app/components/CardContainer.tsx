@@ -1,7 +1,3 @@
-export default function Card({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="flex w-full flex-col items-center gap-8 pt-32">
-      {children}
-    </div>
-  );
+export function CardContainer({ children }: { children: React.ReactNode }) {
+  return <div className="flex flex-col gap-6">{children}</div>;
 }

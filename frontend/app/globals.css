@@ -11,7 +11,7 @@
   h2,
   h3,
   div {
-    font-size: var(--text-sm);
+    font-size: var(--text-xs);
     text-transform: uppercase;
   }
 }
