@@ -64,8 +64,7 @@ export async function getPost() {
 }
 
 export async function getTags() {
-  const TAGS_QUERY = defineQuery(
-    `*[_type == "tag"] {
+  const TAGS_QUERY = defineQuery(`*[_type == "tag"] {
       _id,
       _type,
       title,
@@ -76,8 +75,7 @@ export async function getTags() {
         title,
         slug
       }
-    }`,
-  );
+    }`);
   const result = await client.fetch(TAGS_QUERY);
   return result;
 }

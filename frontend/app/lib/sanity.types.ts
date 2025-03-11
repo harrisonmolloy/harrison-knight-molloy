@@ -246,7 +246,7 @@ export type AllSanitySchemaTypes =
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ../frontend/app/lib/queries.ts
 // Variable: CONFIG_QUERY
-// Query: *[_type == "config" && _id == "config"][0]{ title, tagline, description }
+// Query: *[_type == "config" && _id == "config"][0]{      title,      tagline,      description    }
 export type CONFIG_QUERYResult = {
   title: string;
   tagline: string | null;
@@ -321,7 +321,7 @@ export type POSTS_QUERYResult = Array<{
 // Query: *[_type == "post" && _id == id]{    _id,    _type,    title,    date,    body[] {      ...,      asset-> {        ...,        "_key": _id      }    },    tags[]-> {      _id,      _type,      title,      slug    }  }
 export type POST_QUERYResult = Array<never>;
 // Variable: TAGS_QUERY
-// Query: *[_type == "tag"] { _id, _type, title, slug, tags[]-> { _id, _type, title, slug }}
+// Query: *[_type == "tag"] {      _id,      _type,      title,      slug,      tags[]-> {        _id,        _type,        title,        slug      }    }
 export type TAGS_QUERYResult = Array<{
   _id: string;
   _type: "tag";
@@ -404,10 +404,10 @@ export type POSTS_BY_TAGS_QUERYResult = Array<{
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    '*[_type == "config" && _id == "config"][0]{ title, tagline, description }': CONFIG_QUERYResult;
+    '*[_type == "config" && _id == "config"][0]{\n      title,\n      tagline,\n      description\n    }': CONFIG_QUERYResult;
     '*[_type == "post"] {\n      _id,\n      _type,\n      title,\n      date,\n      body[] {\n        ...,\n        asset-> {\n          ...,\n          "_key": _id\n        }\n      },\n      tags[]-> {\n        _id,\n        _type,\n        title,\n        slug\n      }\n    }': POSTS_QUERYResult;
     '*[_type == "post" && _id == id]{\n    _id,\n    _type,\n    title,\n    date,\n    body[] {\n      ...,\n      asset-> {\n        ...,\n        "_key": _id\n      }\n    },\n    tags[]-> {\n      _id,\n      _type,\n      title,\n      slug\n    }\n  }': POST_QUERYResult;
-    '*[_type == "tag"] { _id, _type, title, slug, tags[]-> { _id, _type, title, slug }}': TAGS_QUERYResult;
+    '*[_type == "tag"] {\n      _id,\n      _type,\n      title,\n      slug,\n      tags[]-> {\n        _id,\n        _type,\n        title,\n        slug\n      }\n    }': TAGS_QUERYResult;
     '*[_type == "post" && references(*[_type=="tag" && title match $tagName]._id)] {\n      _id,\n      _type,\n      title,\n      date,\n      body[] {\n        ...,\n        asset-> {\n          ...,\n          "_key": _id\n        }\n      },\n      tags[]-> {\n        _id,\n        _type,\n        title,\n        slug\n      }\n    }': POSTS_BY_TAGS_QUERYResult;
   }
 }

@@ -1,10 +1,19 @@
+"use client";
+
 import { Card } from "components/Card";
 import { CardRow } from "components/CardRow";
+import { CardBody } from "components/CardBody";
 import { POSTS_QUERYResult } from "lib/sanity.types";
-import { Blocks } from "components/Blocks";
 import Link from "next/link";
+import { useState } from "react";
 
 export function Post({ post }: { post: POSTS_QUERYResult[0] }) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  function handleClick() {
+    setIsOpen(!isOpen);
+  }
+
   let date;
   if (post.date) {
     date = new Date(post.date).toLocaleDateString();
@@ -15,8 +24,8 @@ export function Post({ post }: { post: POSTS_QUERYResult[0] }) {
         <h2>{post.title}</h2>
         <p>{date}</p>
       </CardRow>
-
-      <Body post={post} />
+      <CardBody post={post} isOpen={isOpen} />
+      <ViewMoreRow post={post} isOpen={isOpen} onClick={handleClick} />
       <CardRow>
         {post.tags?.map((tag) => (
           <Link
@@ -32,8 +41,22 @@ export function Post({ post }: { post: POSTS_QUERYResult[0] }) {
   );
 }
 
-function Body({ post }: { post: POSTS_QUERYResult[0] }) {
-  if (post.body) {
-    return <Blocks blocks={post.body} />;
-  }
+function ViewMoreRow({
+  post,
+  isOpen,
+  onClick,
+}: {
+  post: POSTS_QUERYResult[0];
+  isOpen: boolean;
+  onClick: () => void;
+}) {
+  if (post.body.length < 2) return <></>;
+
+  return (
+    <CardRow justify>
+      <button onClick={onClick} className="cursor-pointer underline">
+        {isOpen ? "Close" : "View More"}
+      </button>
+    </CardRow>
+  );
 }
