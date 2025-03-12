@@ -6,10 +6,7 @@ export function Card({
   onClick?: () => void;
 }) {
   return (
-    <div
-      className="flex max-w-md flex-col gap-4 rounded-lg bg-stone-50 p-6 text-stone-900 drop-shadow-md"
-      onClick={onClick}
-    >
+    <div className="p-2" onClick={onClick}>
       {children}
     </div>
   );

@@ -1,9 +1,16 @@
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
-import { Nav } from "components/Nav";
-import { NavButton } from "components/NavButton";
 import { Container } from "components/Container";
+import localFont from "next/font/local";
+
+// Font files can be colocated inside of `app`
+const sf_mono = localFont({
+  src: "./fonts/SF-Mono-Regular.otf",
+  display: "swap",
+  weight: "400",
+  variable: "--font-sf-mono",
+});
 
 import "./globals.css";
 
@@ -18,14 +25,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="bg-stone-200 font-base">
+    <html lang="en" className={`${sf_mono.variable}`}>
       <body>
-        <Nav>
-          <NavButton>Home</NavButton>
-          {/* <NavButton href="/graph-2d">Graph</NavButton> */}
-          <NavButton href="/posts/projects">Projects</NavButton>
-          <NavButton href="/about">about</NavButton>
-        </Nav>
         <Container>{children}</Container>
         <Analytics />
         <SpeedInsights />

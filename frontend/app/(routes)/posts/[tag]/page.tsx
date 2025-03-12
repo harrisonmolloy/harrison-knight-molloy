@@ -1,6 +1,8 @@
 import { Post } from "@/app/components/Post";
 import { getPostsByTag } from "lib/queries";
 import { getTags } from "lib/queries";
+import { Divider } from "@/app/components/Divider";
+import { Pane } from "components/Pane";
 
 export default async function Page({
   params,
@@ -11,10 +13,12 @@ export default async function Page({
   const posts = await getPostsByTag(tag);
   return (
     <>
-      <h1>{tag}</h1>
-      {posts.map((post) => (
-        <Post key={post._id} post={post} />
-      ))}
+      <Pane title={`/AllPosts/${tag}`}>
+        {posts.map((post) => (
+          <Post key={post._id} post={post} />
+        ))}
+      </Pane>
+      <Divider />
     </>
   );
 }

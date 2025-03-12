@@ -1,10 +1,14 @@
 import { PostList } from "@/app/components/PostList";
+import { Divider } from "@/app/components/Divider";
+import { Pane } from "components/Pane";
 
 export default function posts() {
   return (
     <>
-      <h1>All Posts</h1>
-      <PostList />
+      <Pane title="/AllPosts">
+        <PostList />
+      </Pane>
+      <Divider />
     </>
   );
 }

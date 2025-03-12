@@ -1,6 +1,6 @@
 export function Container({ children }: { children: React.ReactNode }) {
   return (
-    <main className="flex min-h-svh flex-col justify-around px-4 pb-32">
+    <main className="flex h-svh overflow-hidden max-md:flex-col">
       {children}
     </main>
   );
