@@ -2,22 +2,12 @@
 
 ### Overview
 
-My personal website and online 'home' 🏠
+My digital archive and online portfolio 🏠
 
-### Tech Stack
+### Using
 
-Frontend: Next.js, React, Tailwind CSS
-Backend: Sanity CMS
-Hosted: Vercel
+Typescript, Next.js, React, Tailwind, Sanity
 
 ### Contact
 
 Feel free to reach out via email at mail@harrisonmolloy.com
-
-### todo
-
-- [x] Init data model and schema
-- [x] fix dark mode issue
-- [ ] Populate with test data
-- [ ] Mock up ui
-- [ ] Write Queries and connect front and backend
