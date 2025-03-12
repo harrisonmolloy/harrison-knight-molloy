@@ -20,16 +20,15 @@ export function Post({ post }: { post: POSTS_QUERYResult[0] }) {
   }
   return (
     <Card key={post._id}>
-      <CardRow justify>
-        <h2>{post.title}</h2>
-        <p>{date}</p>
-      </CardRow>
-      <CardBody post={post} isOpen={isOpen} />
-      <ViewMoreRow post={post} isOpen={isOpen} onClick={handleClick} />
       <CardRow>
+        <p className="dark:text-dark-bright-black text-light-bright-black">$</p>
+        <h2>{post.title}</h2>
+        <p className="dark:text-dark-bright-black text-light-bright-black">
+          {date}
+        </p>
         {post.tags?.map((tag) => (
           <Link
-            className="text-stone-400"
+            className="text-light-bright-magenta dark:text-dark-bright-magenta"
             href={`/posts/${tag.slug.current}`}
             key={tag._id}
           >
@@ -37,6 +36,8 @@ export function Post({ post }: { post: POSTS_QUERYResult[0] }) {
           </Link>
         ))}
       </CardRow>
+      <CardBody post={post} isOpen={isOpen} />
+      <ViewMoreRow post={post} isOpen={isOpen} onClick={handleClick} />
     </Card>
   );
 }
@@ -54,7 +55,10 @@ function ViewMoreRow({
 
   return (
     <CardRow justify>
-      <button onClick={onClick} className="cursor-pointer underline">
+      <button
+        onClick={onClick}
+        className="cursor-pointer text-light-blue underline dark:text-dark-blue"
+      >
         {isOpen ? "Close" : "View More"}
       </button>
     </CardRow>
