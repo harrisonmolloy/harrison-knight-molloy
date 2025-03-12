@@ -21,10 +21,15 @@ export function Post({ post }: { post: POSTS_QUERYResult[0] }) {
   return (
     <Card key={post._id}>
       <CardRow>
-        <p className="dark:text-dark-bright-black text-light-bright-black">$</p>
-        <h2>{post.title}</h2>
         <p className="dark:text-dark-bright-black text-light-bright-black">
-          {date}
+          {"> Post"}
+        </p>
+        <p className="dark:text-dark-bright-black text-light-bright-black">
+          {"-d " + date}
+        </p>
+        <h2>{"-t " + post.title}</h2>
+        <p className="text-light-bright-magenta dark:text-dark-bright-magenta">
+          {"--tags "}
         </p>
         {post.tags?.map((tag) => (
           <Link
