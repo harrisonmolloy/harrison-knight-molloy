@@ -20,7 +20,7 @@ export function Pane({
 
   if (isOpen) {
     return (
-      <section className="flex flex-1 flex-col overflow-hidden border-light-fg dark:border-dark-fg">
+      <section className="flex flex-1 flex-col overflow-hidden">
         <button className="z-1 flex p-2">
           <h1>{title}</h1>
           <div className="flex-1"></div>
