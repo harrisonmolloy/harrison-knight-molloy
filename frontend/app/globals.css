@@ -69,6 +69,8 @@
   h3,
   div {
     font-size: var(--text-xs);
+    line-height: var(--text-xs--line-height);
+
     color: var(--color-light-fg);
     @variant dark {
       color: var(--color-dark-fg);

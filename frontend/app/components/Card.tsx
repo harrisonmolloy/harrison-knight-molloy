@@ -6,7 +6,7 @@ export function Card({
   onClick?: () => void;
 }) {
   return (
-    <div className="p-2" onClick={onClick}>
+    <div className="max-w-xl p-2" onClick={onClick}>
       {children}
     </div>
   );
