@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { X } from "lucide-react";
 
 export function Pane({
   children,
@@ -19,9 +20,11 @@ export function Pane({
 
   if (isOpen) {
     return (
-      <section className="flex flex-1 flex-col overflow-hidden">
-        <button className="z-1 flex p-2" onClick={handleClick}>
+      <section className="flex flex-1 flex-col overflow-hidden border-light-fg dark:border-dark-fg">
+        <button className="z-1 flex p-2">
           <h1>{title}</h1>
+          <div className="flex-1"></div>
+          <X size={16} strokeWidth={1.75} onClick={handleClick} />
         </button>
         <div className="flex flex-1 flex-col overflow-y-scroll">{children}</div>
       </section>
