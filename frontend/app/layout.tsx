@@ -1,7 +1,7 @@
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
-import { Container } from "components/Container";
+import { Container } from "components/server/Container";
 import localFont from "next/font/local";
 
 // Font files can be colocated inside of `app`

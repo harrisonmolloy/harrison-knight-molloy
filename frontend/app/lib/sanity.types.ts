@@ -318,8 +318,70 @@ export type POSTS_QUERYResult = Array<{
   }> | null;
 }>;
 // Variable: POST_QUERY
-// Query: *[_type == "post" && _id == id]{    _id,    _type,    title,    date,    body[] {      ...,      asset-> {        ...,        "_key": _id      }    },    tags[]-> {      _id,      _type,      title,      slug    }  }
-export type POST_QUERYResult = Array<never>;
+// Query: *[_type == "post" && _id == $postId]{    _id,    _type,    title,    date,    body[] {      ...,      asset-> {        ...,        "_key": _id      }    },    tags[]-> {      _id,      _type,      title,      slug    }  }
+export type POST_QUERYResult = Array<{
+  _id: string;
+  _type: "post";
+  title: string | null;
+  date: string | null;
+  body: Array<
+    | {
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
+        listItem?: "bullet";
+        markDefs?: Array<{
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+        asset: null;
+      }
+    | {
+        asset: {
+          _id: string;
+          _type: "sanity.imageAsset";
+          _createdAt: string;
+          _updatedAt: string;
+          _rev: string;
+          originalFilename?: string;
+          label?: string;
+          title?: string;
+          description?: string;
+          altText?: string;
+          sha1hash?: string;
+          extension?: string;
+          mimeType?: string;
+          size?: number;
+          assetId?: string;
+          uploadId?: string;
+          path?: string;
+          url?: string;
+          metadata?: SanityImageMetadata;
+          source?: SanityAssetSourceData;
+          _key: string;
+        } | null;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt: string;
+        _type: "blockImage";
+        _key: string;
+      }
+  >;
+  tags: Array<{
+    _id: string;
+    _type: "tag";
+    title: string;
+    slug: Slug;
+  }> | null;
+}>;
 // Variable: TAGS_QUERY
 // Query: *[_type == "tag"] {      _id,      _type,      title,      slug,      tags[]-> {        _id,        _type,        title,        slug      }    }
 export type TAGS_QUERYResult = Array<{
@@ -399,6 +461,85 @@ export type POSTS_BY_TAGS_QUERYResult = Array<{
     slug: Slug;
   }> | null;
 }>;
+// Variable: POSTS_AND_TAGS_QUERY
+// Query: {    "posts": *[_type == "post"] {        _id,        _type,        title,        date,        body[] {          ...,          asset-> {            ...,            "_key": _id          }        },        tags[]-> {          _id,          _type,          title,          slug        }  }, "tags" : *[_type == "tag"] {        _id,        _type,        title,        slug,        tags[]-> {          _id,          _type,          title,          slug        }      }}
+export type POSTS_AND_TAGS_QUERYResult = {
+  posts: Array<{
+    _id: string;
+    _type: "post";
+    title: string | null;
+    date: string | null;
+    body: Array<
+      | {
+          children?: Array<{
+            marks?: Array<string>;
+            text?: string;
+            _type: "span";
+            _key: string;
+          }>;
+          style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
+          listItem?: "bullet";
+          markDefs?: Array<{
+            href?: string;
+            _type: "link";
+            _key: string;
+          }>;
+          level?: number;
+          _type: "block";
+          _key: string;
+          asset: null;
+        }
+      | {
+          asset: {
+            _id: string;
+            _type: "sanity.imageAsset";
+            _createdAt: string;
+            _updatedAt: string;
+            _rev: string;
+            originalFilename?: string;
+            label?: string;
+            title?: string;
+            description?: string;
+            altText?: string;
+            sha1hash?: string;
+            extension?: string;
+            mimeType?: string;
+            size?: number;
+            assetId?: string;
+            uploadId?: string;
+            path?: string;
+            url?: string;
+            metadata?: SanityImageMetadata;
+            source?: SanityAssetSourceData;
+            _key: string;
+          } | null;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          alt: string;
+          _type: "blockImage";
+          _key: string;
+        }
+    >;
+    tags: Array<{
+      _id: string;
+      _type: "tag";
+      title: string;
+      slug: Slug;
+    }> | null;
+  }>;
+  tags: Array<{
+    _id: string;
+    _type: "tag";
+    title: string;
+    slug: Slug;
+    tags: Array<{
+      _id: string;
+      _type: "tag";
+      title: string;
+      slug: Slug;
+    }> | null;
+  }>;
+};
 
 // Query TypeMap
 import "@sanity/client";
@@ -406,8 +547,9 @@ declare module "@sanity/client" {
   interface SanityQueries {
     '*[_type == "config" && _id == "config"][0]{\n      title,\n      tagline,\n      description\n    }': CONFIG_QUERYResult;
     '*[_type == "post"] {\n      _id,\n      _type,\n      title,\n      date,\n      body[] {\n        ...,\n        asset-> {\n          ...,\n          "_key": _id\n        }\n      },\n      tags[]-> {\n        _id,\n        _type,\n        title,\n        slug\n      }\n    }': POSTS_QUERYResult;
-    '*[_type == "post" && _id == id]{\n    _id,\n    _type,\n    title,\n    date,\n    body[] {\n      ...,\n      asset-> {\n        ...,\n        "_key": _id\n      }\n    },\n    tags[]-> {\n      _id,\n      _type,\n      title,\n      slug\n    }\n  }': POST_QUERYResult;
+    '*[_type == "post" && _id == $postId]{\n    _id,\n    _type,\n    title,\n    date,\n    body[] {\n      ...,\n      asset-> {\n        ...,\n        "_key": _id\n      }\n    },\n    tags[]-> {\n      _id,\n      _type,\n      title,\n      slug\n    }\n  }': POST_QUERYResult;
     '*[_type == "tag"] {\n      _id,\n      _type,\n      title,\n      slug,\n      tags[]-> {\n        _id,\n        _type,\n        title,\n        slug\n      }\n    }': TAGS_QUERYResult;
     '*[_type == "post" && references(*[_type=="tag" && title match $tagName]._id)] {\n      _id,\n      _type,\n      title,\n      date,\n      body[] {\n        ...,\n        asset-> {\n          ...,\n          "_key": _id\n        }\n      },\n      tags[]-> {\n        _id,\n        _type,\n        title,\n        slug\n      }\n    }': POSTS_BY_TAGS_QUERYResult;
+    '{\n    "posts": *[_type == "post"] {\n        _id,\n        _type,\n        title,\n        date,\n        body[] {\n          ...,\n          asset-> {\n            ...,\n            "_key": _id\n          }\n        },\n        tags[]-> {\n          _id,\n          _type,\n          title,\n          slug\n        }\n  }, "tags" : *[_type == "tag"] {\n        _id,\n        _type,\n        title,\n        slug,\n        tags[]-> {\n          _id,\n          _type,\n          title,\n          slug\n        }\n      }}': POSTS_AND_TAGS_QUERYResult;
   }
 }

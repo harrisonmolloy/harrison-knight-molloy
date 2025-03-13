@@ -1,4 +1,4 @@
-export function CardRow({
+export function Row({
   children,
   justify = false,
   className,

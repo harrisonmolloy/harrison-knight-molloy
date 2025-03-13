@@ -11,7 +11,7 @@ const ForceGraph2D = dynamic(() => import("react-force-graph-2d"), {
   ssr: false,
 });
 
-export function Graph2d({ graphData }: { graphData: GraphData }) {
+export function Graph2d({ graphData }: { graphData?: GraphData }) {
   const [size, setSize] = useState({ width: 400, height: 500 });
   const ref = useRef<HTMLDivElement>(null);
   const router = useRouter();

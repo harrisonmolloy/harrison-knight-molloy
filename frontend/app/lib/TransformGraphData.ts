@@ -1,10 +1,10 @@
 import { Node, Link } from "lib/graphDataTypes";
-import { getPosts, getTags } from "lib/getFunctions";
+import { POSTS_AND_TAGS_QUERYResult } from "./sanity.types";
 
-export async function getGraphData() {
-  const tags = await getTags();
-  const posts = await getPosts();
-
+export function transformGraphData({
+  tags,
+  posts,
+}: POSTS_AND_TAGS_QUERYResult) {
   const nodes: Node[] = [];
   const nodeIds = new Set();
   const links: Link[] = [];

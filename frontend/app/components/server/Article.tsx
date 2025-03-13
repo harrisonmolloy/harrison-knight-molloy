@@ -1,4 +1,4 @@
-export function Card({
+export function Article({
   children,
   onClick,
 }: {
@@ -6,8 +6,8 @@ export function Card({
   onClick?: () => void;
 }) {
   return (
-    <div className="max-w-xl p-2" onClick={onClick}>
+    <article className="max-w-xl p-2" onClick={onClick}>
       {children}
-    </div>
+    </article>
   );
 }
