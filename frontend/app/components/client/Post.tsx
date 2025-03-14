@@ -7,7 +7,9 @@ import { Row } from "components/server/Row";
 import { BlockAccordian } from "components/server/BlockAccordian";
 import { POSTS_QUERYResult } from "lib/sanity.types";
 
-export function Post({ post }: { post: POSTS_QUERYResult[0] }) {
+type PostProps = { post: POSTS_QUERYResult[0] };
+
+export function Post({ post }: PostProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   function handleClick() {
