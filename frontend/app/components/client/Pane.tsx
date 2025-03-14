@@ -1,4 +1,5 @@
 "use client";
+
 import { X } from "lucide-react";
 
 type PaneProps = {
@@ -9,6 +10,7 @@ type PaneProps = {
   onXClick(position: number): void;
   onClosedClick(position: number): void;
   onTitleClick(position: number): void;
+  onClick(): void;
 };
 
 export function Pane({
@@ -18,6 +20,7 @@ export function Pane({
   position,
   onXClick,
   onTitleClick,
+  onClick,
 }: PaneProps) {
   function handleXClick(event: React.MouseEvent<HTMLButtonElement>) {
     event.stopPropagation();
@@ -32,6 +35,7 @@ export function Pane({
   if (isOpen) {
     return (
       <section
+        onClick={onClick}
         className={`flex flex-1 flex-col overflow-hidden border border-light-fg dark:border-dark-fg ${position == 0 ? "" : "border-t-0 md:border md:border-l-0"}`}
       >
         <div onClick={handleTitleClick} className="z-1 flex p-2">
@@ -47,6 +51,7 @@ export function Pane({
   }
   return (
     <section
+      onClick={onClick}
       className={`flex flex-col overflow-hidden border border-light-fg dark:border-dark-fg ${position == 0 ? "" : "border-t-0 md:border md:border-l-0"}`}
     >
       <div

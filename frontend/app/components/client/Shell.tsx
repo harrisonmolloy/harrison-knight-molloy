@@ -1,48 +1,92 @@
 "use client";
 
-import { useState } from "react";
-import { TerminalInput } from "./TerminalInput";
+import { useRef, useEffect } from "react";
+import { ReactElement } from "react";
+import { TerminalInput } from "components/client/TerminalInput";
+import { PaneType } from "components/client/PaneManager";
+import { PostList } from "components/client/PostList";
+import { Graph } from "./Graph";
 
 type ShellProps = {
   onExit: (position: number) => void;
+  position: number;
+  panes: PaneType[];
+  setPanes: (panes: PaneType[]) => void;
+  isActive: boolean;
 };
 
-export function Shell({ onExit }: ShellProps) {
-  const [history, setHistory] = useState<{ command: string; output: string }[]>(
-    [],
-  );
+export function Shell({ position, panes, setPanes, isActive }: ShellProps) {
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  function updateHistory(command: string, output: string) {
-    setHistory([...history, { command, output }]);
+  useEffect(() => {
+    if (isActive && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [isActive]); // Focus only when isActive changes
+
+  function updateHistory(command: string, output: ReactElement) {
+    const history = panes[position].history;
+    if (history != null) {
+      const panesCopy = panes.slice();
+      panesCopy[position].history = [...history, { command, output }];
+      setPanes(panesCopy);
+    }
   }
 
-  function executeCommand(command: string) {
+  function clearHistory() {
+    const history = panes[position].history;
+    if (history != null) {
+      const panesCopy = panes.slice();
+      panesCopy[position].history = [];
+      setPanes(panesCopy);
+    }
+  }
+
+  function exit() {
+    setPanes([...panes.slice(0, position), ...panes.slice(position + 1)]);
+  }
+
+  async function executeCommand(command: string) {
     switch (command.toLowerCase()) {
       case "help":
-        updateHistory(command, "Available commands: projects, about, contact");
+        updateHistory(
+          command,
+          <p>Available commands: posts, about, contact</p>,
+        );
         break;
       case "exit":
-        updateHistory(command, "...exiting");
-        onExit(1);
+        exit();
         break;
-      case "projects":
-        updateHistory(command, "...Fetching All Projects");
+      case "clear":
+        clearHistory();
+        break;
+      case "posts":
+        updateHistory(command, <PostList />);
+        break;
+      case "graph":
+        updateHistory(command, <Graph />);
         break;
       default:
-        updateHistory(command, `Command not found: ${command}`);
+        updateHistory(
+          command,
+          <>
+            <p>Command not found: {command}</p>
+            <p>Try: posts, about, contact</p>
+          </>,
+        );
     }
   }
 
   return (
     <div className="p-2">
-      {history.map((item, idx) => (
+      {panes[position].history?.map((item, idx) => (
         <div key={idx}>
           <div>$ {item.command}</div>
           <div>{item.output}</div>
           <br />
         </div>
       ))}
-      <TerminalInput onSubmit={executeCommand} />
+      <TerminalInput inputRef={inputRef} onSubmit={executeCommand} />
     </div>
   );
 }

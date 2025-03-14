@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { RefObject, useState } from "react";
 
 type TerminalInputProps = {
+  inputRef: RefObject<HTMLInputElement | null>;
   onSubmit: (command: string) => void;
 };
 
-export function TerminalInput({ onSubmit }: TerminalInputProps) {
+export function TerminalInput({ onSubmit, inputRef }: TerminalInputProps) {
   const [command, setCommand] = useState("");
 
   function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
@@ -24,6 +25,7 @@ export function TerminalInput({ onSubmit }: TerminalInputProps) {
     <div className="flex">
       <span>$</span>
       <input
+        ref={inputRef}
         type="text"
         value={command}
         onChange={handleChange}

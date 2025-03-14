@@ -6,32 +6,39 @@ import { Pane } from "components/client/Pane";
 import { Graph } from "components/client/Graph";
 import { Shell } from "components/client/Shell";
 
-interface Pane {
+export type PaneType = {
   title: string;
   isOpen: boolean;
-  content: React.JSX.Element;
-}
+  type: string;
+  history?: {
+    command: string;
+    output: React.ReactElement;
+  }[];
+};
 
 export function PaneManager() {
-  const [panes, setPanes] = useState<Pane[]>([
-    {
-      title: "/Graph",
-      isOpen: true,
-      content: <Graph />,
-    },
+  const [panes, setPanes] = useState<PaneType[]>([
     {
       title: "/",
-      isOpen: false,
-      content: <Shell onExit={removePane} />,
+      isOpen: true,
+      type: "shell",
+      history: [],
     },
   ]);
+  const [activePaneIndex, setActivePaneIndex] = useState(0);
 
   function removePane(position: number) {
     setPanes([...panes.slice(0, position), ...panes.slice(position + 1)]);
   }
 
-  function appendPane(pane: Pane) {
-    setPanes([...panes, pane]);
+  function appendPane() {
+    const newPane = {
+      title: "/",
+      isOpen: true,
+      type: "shell",
+      history: [],
+    };
+    setPanes([...panes, newPane]);
   }
 
   function togglePane(position: number) {
@@ -54,20 +61,25 @@ export function PaneManager() {
           isOpen={pane.isOpen}
           onXClick={removePane}
           onTitleClick={togglePane}
+          onClick={() => setActivePaneIndex(id)}
           onClosedClick={handleClosedClick}
         >
-          {pane.content}
+          {pane.type == "graph" ? (
+            <Graph />
+          ) : (
+            <Shell
+              position={id}
+              onExit={removePane}
+              panes={panes}
+              setPanes={setPanes}
+              isActive={activePaneIndex === id}
+            />
+          )}
         </Pane>
       ))}
       <button
         className="absolute z-10 border bg-light-bg p-2 max-md:right-0 md:bottom-0 md:left-0 dark:bg-dark-bg"
-        onClick={() =>
-          appendPane({
-            title: "/",
-            isOpen: false,
-            content: <Shell onExit={removePane} />,
-          })
-        }
+        onClick={appendPane}
       >
         <Plus size={16} strokeWidth={1.75} />
       </button>

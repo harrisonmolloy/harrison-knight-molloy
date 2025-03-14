@@ -133,6 +133,7 @@ export function Graph2d({ graphData }: { graphData?: GraphData }) {
         nodeCanvasObject={drawNode}
         nodePointerAreaPaint={drawPointerArea}
         onNodeClick={handleClick}
+        enableZoomInteraction={false}
       />
     </div>
   );

@@ -6,8 +6,9 @@ export function Article({
   onClick?: () => void;
 }) {
   return (
-    <article className="max-w-xl p-2" onClick={onClick}>
+    <article className="max-w-xl" onClick={onClick}>
       {children}
+      <br />
     </article>
   );
 }
