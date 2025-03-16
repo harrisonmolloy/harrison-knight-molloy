@@ -28,6 +28,17 @@ export function PaneManager() {
   const [activePaneIndex, setActivePaneIndex] = useState(0);
 
   function removePane(position: number) {
+    // need to fix this logic, slice only shallow copies the array
+    //
+    // deepclone array?
+    // use splice (not slice) to remove array
+    // return new deepcloned/spliced array
+    //
+    // use .map + spread to create new array
+    // 
+    // also should reset the position here?
+    // 
+    // keep positon as part of the pane logic/state
     setPanes([...panes.slice(0, position), ...panes.slice(position + 1)]);
   }
 
