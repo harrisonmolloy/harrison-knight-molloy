@@ -60,7 +60,7 @@ export function Pane({
       >
         <h1>{title}</h1>
         <div className="flex-1"></div>
-        <button onClick={() => onXClick(position)}>
+        <button onClick={handleXClick}>
           <X size={16} strokeWidth={1.75} />
         </button>
       </div>
