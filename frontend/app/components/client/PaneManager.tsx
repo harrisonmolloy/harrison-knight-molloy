@@ -33,7 +33,7 @@ export function PaneManager() {
       ],
     },
     {
-      title: "harriknight/posts",
+      title: "harriknight/all-posts",
       isOpen: true,
       type: "shell",
       history: [{ command: "posts", output: <PostList /> }],
