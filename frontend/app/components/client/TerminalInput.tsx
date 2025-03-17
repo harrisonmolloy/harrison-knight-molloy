@@ -27,6 +27,7 @@ export function TerminalInput({ onSubmit, inputRef }: TerminalInputProps) {
       <input
         ref={inputRef}
         type="text"
+        name="Terminal Input"
         value={command}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
