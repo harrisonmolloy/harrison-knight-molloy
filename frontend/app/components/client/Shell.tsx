@@ -4,7 +4,9 @@ import { useRef, useEffect, ReactElement } from "react";
 import { TerminalInput } from "components/client/TerminalInput";
 import { PaneType } from "components/client/PaneManager";
 import { PostList } from "components/client/PostList";
-import { Graph } from "./Graph";
+import { Graph } from "components/client/Graph";
+import { ascii } from "lib/ascii";
+import { getConfig } from "lib/getFunctions";
 
 type ShellProps = {
   onExit: (position: number) => void;
@@ -64,6 +66,22 @@ export function Shell({
 
       case "contact":
         updateHistory(position, command, <p>mail@harriknight.com</p>);
+        break;
+
+      case "about":
+        const config = await getConfig();
+        updateHistory(
+          position,
+          command,
+          <div className="flex">
+            <pre className="text-[5px] leading-[3px]">{ascii}</pre>
+            <div className="ml-1">
+              <p>Title: {config?.title}</p>
+              <p>Description: {config?.description}</p>
+            </div>
+          </div>,
+        );
+
         break;
 
       default:

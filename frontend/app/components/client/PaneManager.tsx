@@ -28,7 +28,14 @@ export function PaneManager() {
         { command: "graph", output: <Graph /> },
         {
           command: "help",
-          output: <p>Available commands: posts, graph, about, contact</p>,
+          output: (
+            <>
+              <span>Available commands: </span>
+              <span className="dark:text-dark-bright-black text-light-bright-black">
+                posts, graph, about, contact
+              </span>
+            </>
+          ),
         },
       ],
     },
