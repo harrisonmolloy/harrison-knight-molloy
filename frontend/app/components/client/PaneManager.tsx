@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { ReactElement, useState } from "react";
+import { produce } from "immer";
 import { Plus } from "lucide-react";
 import { Pane } from "components/client/Pane";
 import { Graph } from "components/client/Graph";
@@ -10,7 +11,7 @@ export type PaneType = {
   title: string;
   isOpen: boolean;
   type: string;
-  history?: {
+  history: {
     command: string;
     output: React.ReactElement;
   }[];
@@ -28,34 +29,50 @@ export function PaneManager() {
   const [activePaneIndex, setActivePaneIndex] = useState(0);
 
   function removePane(position: number) {
-    // need to fix this logic, slice only shallow copies the array
-    //
-    // deepclone array?
-    // use splice (not slice) to remove array
-    // return new deepcloned/spliced array
-    //
-    // use .map + spread to create new array
-    // 
-    // also should reset the position here?
-    // 
-    // keep positon as part of the pane logic/state
-    setPanes([...panes.slice(0, position), ...panes.slice(position + 1)]);
+    const nextPanes = produce(panes, (draft) => {
+      // remove pane at positon
+      draft.splice(position, 1);
+      // note: when postion moves to state remember to reset the position here.
+    });
+    setPanes(nextPanes);
   }
 
   function appendPane() {
-    const newPane = {
-      title: "/",
-      isOpen: true,
-      type: "shell",
-      history: [],
-    };
-    setPanes([...panes, newPane]);
+    const nextPanes = produce(panes, (draft) => {
+      draft.push({
+        title: "/",
+        isOpen: true,
+        type: "shell",
+        history: [],
+      });
+      // note: when postion moves to state remember to add the position here.
+    });
+    setPanes(nextPanes);
   }
 
   function togglePane(position: number) {
-    const panesCopy = panes.slice();
-    panesCopy[position].isOpen = !panes[position].isOpen;
-    setPanes(panesCopy);
+    const nextPanes = produce(panes, (draft) => {
+      draft[position].isOpen = !draft[position].isOpen;
+    });
+    setPanes(nextPanes);
+  }
+
+  function updateHistory(
+    position: number,
+    command: string,
+    output: ReactElement,
+  ) {
+    const nextPanes = produce(panes, (draft) => {
+      draft[position].history.push({ command, output });
+    });
+    setPanes(nextPanes);
+  }
+
+  function clearHistory(position: number) {
+    const nextPanes = produce(panes, (draft) => {
+      draft[position].history = [];
+    });
+    setPanes(nextPanes);
   }
 
   function handleClosedClick(position: number) {
@@ -82,7 +99,8 @@ export function PaneManager() {
               position={id}
               onExit={removePane}
               panes={panes}
-              setPanes={setPanes}
+              updateHistory={updateHistory}
+              clearHistory={clearHistory}
               isActive={activePaneIndex === id}
             />
           )}
