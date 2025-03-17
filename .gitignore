@@ -209,3 +209,5 @@ next-env.d.ts
 # sanity
 .sanity/runtime/app.js
 .sanity/runtime/index.html
+studio/.sanity/runtime/index.html
+/studio/.sanity
