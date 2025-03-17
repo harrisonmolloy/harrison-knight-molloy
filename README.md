@@ -16,7 +16,7 @@ Feel free to reach out via email at mail@harrisonmolloy.com
 
 - [x] fix: install immer, update state updates to not mutate
 - [x] move add pane button to right side on desktop
-- [ ] bug: ability to close pane when collapsed
+- [x] bug: ability to close pane when collapsed
 - [ ] refactor pane to a class
 - [ ] update pane structure to hold position in state
 - [ ] fix focus behaviour on mobile
