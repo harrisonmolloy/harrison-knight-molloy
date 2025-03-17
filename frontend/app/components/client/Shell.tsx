@@ -1,7 +1,6 @@
 "use client";
 
-import { useRef, useEffect } from "react";
-import { ReactElement } from "react";
+import { useRef, useEffect, ReactElement } from "react";
 import { TerminalInput } from "components/client/TerminalInput";
 import { PaneType } from "components/client/PaneManager";
 import { PostList } from "components/client/PostList";
@@ -9,13 +8,25 @@ import { Graph } from "./Graph";
 
 type ShellProps = {
   onExit: (position: number) => void;
+  clearHistory: (position: number) => void;
+  updateHistory: (
+    position: number,
+    command: string,
+    output: ReactElement,
+  ) => void;
   position: number;
   panes: PaneType[];
-  setPanes: (panes: PaneType[]) => void;
   isActive: boolean;
 };
 
-export function Shell({ position, panes, setPanes, isActive }: ShellProps) {
+export function Shell({
+  position,
+  panes,
+  clearHistory,
+  isActive,
+  onExit,
+  updateHistory,
+}: ShellProps) {
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -24,50 +35,31 @@ export function Shell({ position, panes, setPanes, isActive }: ShellProps) {
     }
   }, [isActive]); // Focus only when isActive changes
 
-  function updateHistory(command: string, output: ReactElement) {
-    const history = panes[position].history;
-    if (history != null) {
-      const panesCopy = panes.slice();
-      panesCopy[position].history = [...history, { command, output }];
-      setPanes(panesCopy);
-    }
-  }
-
-  function clearHistory() {
-    const history = panes[position].history;
-    if (history != null) {
-      const panesCopy = panes.slice();
-      panesCopy[position].history = [];
-      setPanes(panesCopy);
-    }
-  }
-
-  function exit() {
-    setPanes([...panes.slice(0, position), ...panes.slice(position + 1)]);
-  }
-
   async function executeCommand(command: string) {
     switch (command.toLowerCase()) {
       case "help":
         updateHistory(
+          position,
           command,
           <p>Available commands: posts, about, contact</p>,
         );
         break;
       case "exit":
-        exit();
+        onExit(position);
         break;
       case "clear":
-        clearHistory();
+      case "clr":
+        clearHistory(position);
         break;
       case "posts":
-        updateHistory(command, <PostList />);
+        updateHistory(position, command, <PostList />);
         break;
       case "graph":
-        updateHistory(command, <Graph />);
+        updateHistory(position, command, <Graph />);
         break;
       default:
         updateHistory(
+          position,
           command,
           <>
             <p>Command not found: {command}</p>
