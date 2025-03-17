@@ -123,7 +123,7 @@ export function Graph2d({ graphData }: { graphData?: GraphData }) {
   });
 
   return (
-    <div ref={ref} className="h-full">
+    <div ref={ref} className="mt-1 h-[60svh] border-y">
       <ForceGraph2D
         graphData={graphData}
         width={size.width}

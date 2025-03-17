@@ -6,6 +6,7 @@ import { Plus } from "lucide-react";
 import { Pane } from "components/client/Pane";
 import { Graph } from "components/client/Graph";
 import { Shell } from "components/client/Shell";
+import { PostList } from "./PostList";
 
 export type PaneType = {
   title: string;
@@ -20,10 +21,22 @@ export type PaneType = {
 export function PaneManager() {
   const [panes, setPanes] = useState<PaneType[]>([
     {
-      title: "/",
+      title: "/harriknight/graph",
       isOpen: true,
       type: "shell",
-      history: [],
+      history: [
+        { command: "graph", output: <Graph /> },
+        {
+          command: "help",
+          output: <p>Available commands: posts, graph, about, contact</p>,
+        },
+      ],
+    },
+    {
+      title: "harriknight/posts",
+      isOpen: true,
+      type: "shell",
+      history: [{ command: "posts", output: <PostList /> }],
     },
   ]);
   const [activePaneIndex, setActivePaneIndex] = useState(0);

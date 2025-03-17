@@ -41,29 +41,38 @@ export function Shell({
         updateHistory(
           position,
           command,
-          <p>Available commands: posts, about, contact</p>,
+          <p>Available commands: graph, posts, about, contact, exit, clear</p>,
         );
         break;
+
       case "exit":
         onExit(position);
         break;
+
       case "clear":
       case "clr":
         clearHistory(position);
         break;
+
       case "posts":
         updateHistory(position, command, <PostList />);
         break;
+
       case "graph":
         updateHistory(position, command, <Graph />);
         break;
+
+      case "contact":
+        updateHistory(position, command, <p>mail@harriknight.com</p>);
+        break;
+
       default:
         updateHistory(
           position,
           command,
           <>
             <p>Command not found: {command}</p>
-            <p>Try: posts, about, contact</p>
+            <p>Try: graph, posts, about, contact, exit, clear</p>
           </>,
         );
     }
