@@ -1,6 +1,7 @@
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
+import type { Viewport } from "next";
 import { Container } from "components/server/Container";
 import localFont from "next/font/local";
 
@@ -13,6 +14,17 @@ const sf_mono = localFont({
 });
 
 import "./globals.css";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "oklch(1 0 0)" },
+    { media: "(prefers-color-scheme: dark)", color: "oklch(0.27 0.01 257)" },
+  ],
+};
 
 export const metadata: Metadata = {
   title: "Harri(son) Knight Molloy",
