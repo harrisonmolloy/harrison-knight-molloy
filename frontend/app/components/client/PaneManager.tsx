@@ -78,7 +78,7 @@ export function PaneManager() {
         </Pane>
       ))}
       <button
-        className="absolute z-10 border bg-light-bg p-2 max-md:right-0 md:bottom-0 md:left-0 dark:bg-dark-bg"
+        className="absolute right-0 z-10 border bg-light-bg p-2 md:bottom-0 dark:bg-dark-bg"
         onClick={appendPane}
       >
         <Plus size={16} strokeWidth={1.75} />
