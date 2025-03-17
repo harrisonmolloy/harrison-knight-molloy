@@ -7,9 +7,15 @@ export function Row({
   justify?: boolean;
   className?: string;
 }) {
-  if (!justify)
-    return <div className={"flex gap-2 " + className}>{children}</div>;
+  if (justify)
+    return (
+      <div
+        className={"mb-1 flex flex-wrap justify-between gap-x-2 " + className}
+      >
+        {children}
+      </div>
+    );
   return (
-    <div className={"flex justify-between gap-2 " + className}>{children}</div>
+    <div className={"mb-1 flex flex-wrap gap-x-2 " + className}>{children}</div>
   );
 }
