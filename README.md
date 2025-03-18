@@ -19,7 +19,7 @@ Feel free to reach out via email at mail@harrisonmolloy.com
 - [x] bug: ability to close pane when collapsed
 - [x] fix focus behaviour on mobile
 - [x] update inital panes
-- [ ] refactor pane to a class
+- [ ] move history to shell state
 - [ ] update pane structure to hold position in state
 - [ ] fix bug with changing focus when only one pane active
-- [ ] debug issue with graph not displaying when it is the first command
+- [x] debug issue with graph not displaying when it is the first command
