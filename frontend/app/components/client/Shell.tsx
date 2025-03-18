@@ -8,18 +8,12 @@ import { PostList } from "components/client/PostList";
 import { Graph } from "components/client/Graph";
 
 type ShellProps = {
-  panePosition: number;
   isActive: boolean;
-  onExit: (position: number) => void;
+  onExit: () => void;
   initialHistory: React.ReactElement[];
 };
 
-export function Shell({
-  panePosition,
-  isActive,
-  onExit,
-  initialHistory,
-}: ShellProps) {
+export function Shell({ isActive, onExit, initialHistory }: ShellProps) {
   const [history, setHistory] = useState(initialHistory || []);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -51,7 +45,7 @@ export function Shell({
         break;
 
       case "exit":
-        onExit(panePosition);
+        onExit();
         break;
 
       case "clear":

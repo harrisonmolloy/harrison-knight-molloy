@@ -89,8 +89,7 @@ export function PaneManager() {
             <Graph />
           ) : (
             <Shell
-              panePosition={id}
-              onExit={removePane}
+              onExit={() => removePane(id)}
               isActive={activePaneIndex === id}
               initialHistory={pane.initialHistory}
             />
