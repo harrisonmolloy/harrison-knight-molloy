@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactElement, useState } from "react";
+import { useState } from "react";
 import { produce } from "immer";
 import { Plus } from "lucide-react";
 import { Pane } from "components/client/Pane";
@@ -12,7 +12,7 @@ export type PaneType = {
   title: string;
   isOpen: boolean;
   type: string;
-  history: React.ReactElement[];
+  initialHistory: React.ReactElement[];
 };
 
 export function PaneManager() {
@@ -21,7 +21,7 @@ export function PaneManager() {
       title: "/harriknight/graph",
       isOpen: true,
       type: "shell",
-      history: [
+      initialHistory: [
         <div key={0}>$ graph</div>,
         <Graph key={1} />,
         <span key={2}>Available commands: </span>,
@@ -37,7 +37,7 @@ export function PaneManager() {
       title: "harriknight/all-posts",
       isOpen: true,
       type: "shell",
-      history: [<div key={0}>$ posts</div>, <PostList key={1} />],
+      initialHistory: [<div key={0}>$ posts</div>, <PostList key={1} />],
     },
   ];
 
@@ -59,7 +59,7 @@ export function PaneManager() {
         title: "/",
         isOpen: true,
         type: "shell",
-        history: [],
+        initialHistory: [],
       });
       // note: when postion moves to state remember to add the position here.
     });
@@ -69,27 +69,6 @@ export function PaneManager() {
   function togglePane(position: number) {
     const nextPanes = produce(panes, (draft) => {
       draft[position].isOpen = !draft[position].isOpen;
-    });
-    setPanes(nextPanes);
-  }
-
-  function historyPush(position: number, ...elements: ReactElement[]) {
-    const nextPanes = produce(panes, (draft) => {
-      draft[position].history.push(...elements);
-    });
-    setPanes(nextPanes);
-  }
-
-  // function historyPop(position: number) {
-  //   const nextPanes = produce(panes, (draft) => {
-  //     draft[position].history.pop();
-  //   });
-  //   setPanes(nextPanes);
-  // }
-
-  function clearHistory(position: number) {
-    const nextPanes = produce(panes, (draft) => {
-      draft[position].history = [];
     });
     setPanes(nextPanes);
   }
@@ -112,10 +91,8 @@ export function PaneManager() {
             <Shell
               panePosition={id}
               onExit={removePane}
-              history={panes[id].history}
-              historyPush={historyPush}
-              clearHistory={clearHistory}
               isActive={activePaneIndex === id}
+              initialHistory={pane.initialHistory}
             />
           )}
         </Pane>

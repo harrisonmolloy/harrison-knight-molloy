@@ -20,7 +20,7 @@ Feel free to reach out via email at mail@harrisonmolloy.com
 - [x] fix focus behaviour on mobile
 - [x] update inital panes
 - [ ] refactor shell commands to seperate components
-- [ ] move history to shell state
+- [x] move history to shell state
 - [ ] update pane structure to hold position in state
 - [ ] fix bug with changing focus when only one pane active
 - [x] debug issue with graph not displaying when it is the first command

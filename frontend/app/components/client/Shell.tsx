@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect, ReactElement } from "react";
+import { useRef, useEffect, useState } from "react";
 import { ascii } from "lib/ascii";
 import { getConfig } from "lib/getFunctions";
 import { TerminalInput } from "components/client/TerminalInput";
@@ -10,20 +10,17 @@ import { Graph } from "components/client/Graph";
 type ShellProps = {
   panePosition: number;
   isActive: boolean;
-  history: ReactElement[];
   onExit: (position: number) => void;
-  clearHistory: (position: number) => void;
-  historyPush: (position: number, ...elements: ReactElement[]) => void;
+  initialHistory: React.ReactElement[];
 };
 
 export function Shell({
   panePosition,
   isActive,
-  history,
   onExit,
-  clearHistory,
-  historyPush,
+  initialHistory,
 }: ShellProps) {
+  const [history, setHistory] = useState(initialHistory || []);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -32,11 +29,22 @@ export function Shell({
     }
   }, [isActive]); // Focus only when isActive changes
 
+  function historyPush(...elements: React.ReactElement[]) {
+    setHistory((previousHistory) => [...previousHistory, ...elements]);
+  }
+
+  // function historyPop() {
+  //   setHistory(previousHistory => previousHistory.slice(0, -1));
+  // }
+
+  function clearHistory() {
+    setHistory([]);
+  }
+
   async function executeCommand(command: string) {
     switch (command.toLowerCase()) {
       case "help":
         historyPush(
-          panePosition,
           <p>$ {command}</p>,
           <p>Available commands: graph, posts, about, contact, exit, clear</p>,
         );
@@ -48,29 +56,24 @@ export function Shell({
 
       case "clear":
       case "clr":
-        clearHistory(panePosition);
+        clearHistory();
         break;
 
       case "posts":
-        historyPush(panePosition, <p>$ {command}</p>, <PostList />);
+        historyPush(<p>$ {command}</p>, <PostList />);
         break;
 
       case "graph":
-        historyPush(panePosition, <p>$ {command}</p>, <Graph />);
+        historyPush(<p>$ {command}</p>, <Graph />);
         break;
 
       case "contact":
-        historyPush(
-          panePosition,
-          <p>$ {command}</p>,
-          <p>mail@harriknight.com</p>,
-        );
+        historyPush(<p>$ {command}</p>, <p>mail@harriknight.com</p>);
         break;
 
       case "about":
         const config = await getConfig();
         historyPush(
-          panePosition,
           <p>$ {command}</p>,
           <div className="flex">
             <pre className="text-[5px] leading-[3px]">{ascii}</pre>
@@ -84,7 +87,6 @@ export function Shell({
 
       default:
         historyPush(
-          panePosition,
           <p>$ {command}</p>,
           <>
             <p>Command not found: {command}</p>
