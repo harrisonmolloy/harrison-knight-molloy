@@ -6,7 +6,7 @@ import { Plus } from "lucide-react";
 import { Pane } from "components/client/Pane";
 import { Graph } from "components/client/Graph";
 import { Shell } from "components/client/Shell";
-import { PostList } from "./PostList";
+import { PostList } from "components/client/PostList";
 
 export type PaneType = {
   title: string;

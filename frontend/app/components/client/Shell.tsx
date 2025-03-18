@@ -1,12 +1,12 @@
 "use client";
 
 import { useRef, useEffect, ReactElement } from "react";
+import { ascii } from "lib/ascii";
+import { getConfig } from "lib/getFunctions";
 import { TerminalInput } from "components/client/TerminalInput";
 import { PaneType } from "components/client/PaneManager";
 import { PostList } from "components/client/PostList";
 import { Graph } from "components/client/Graph";
-import { ascii } from "lib/ascii";
-import { getConfig } from "lib/getFunctions";
 
 type ShellProps = {
   position: number;
