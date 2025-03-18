@@ -9,6 +9,9 @@ import { ascii } from "lib/ascii";
 import { getConfig } from "lib/getFunctions";
 
 type ShellProps = {
+  position: number;
+  isActive: boolean;
+  history: PaneType["history"];
   onExit: (position: number) => void;
   clearHistory: (position: number) => void;
   updateHistory: (
@@ -16,17 +19,14 @@ type ShellProps = {
     command: string,
     output: ReactElement,
   ) => void;
-  position: number;
-  panes: PaneType[];
-  isActive: boolean;
 };
 
 export function Shell({
   position,
-  panes,
-  clearHistory,
   isActive,
+  history,
   onExit,
+  clearHistory,
   updateHistory,
 }: ShellProps) {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -98,7 +98,7 @@ export function Shell({
 
   return (
     <div className="p-2">
-      {panes[position].history?.map((item, idx) => (
+      {history.map((item, idx) => (
         <div key={idx}>
           <div>$ {item.command}</div>
           <div>{item.output}</div>

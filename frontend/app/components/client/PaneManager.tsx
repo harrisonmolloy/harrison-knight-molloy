@@ -113,7 +113,7 @@ export function PaneManager() {
             <Shell
               position={id}
               onExit={removePane}
-              panes={panes}
+              history={panes[id].history}
               updateHistory={updateHistory}
               clearHistory={clearHistory}
               isActive={activePaneIndex === id}
