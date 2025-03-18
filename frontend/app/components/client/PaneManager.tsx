@@ -95,10 +95,6 @@ export function PaneManager() {
     setPanes(nextPanes);
   }
 
-  function handleClosedClick(position: number) {
-    togglePane(position);
-  }
-
   return (
     <>
       {panes.map((pane, id) => (
@@ -110,7 +106,6 @@ export function PaneManager() {
           onXClick={removePane}
           onTitleClick={togglePane}
           onClick={() => setActivePaneIndex(id)}
-          onClosedClick={handleClosedClick}
         >
           {pane.type == "graph" ? (
             <Graph />

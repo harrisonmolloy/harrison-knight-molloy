@@ -8,7 +8,6 @@ type PaneProps = {
   isOpen?: boolean;
   position: number;
   onXClick(position: number): void;
-  onClosedClick(position: number): void;
   onTitleClick(position: number): void;
   onClick(): void;
 };
