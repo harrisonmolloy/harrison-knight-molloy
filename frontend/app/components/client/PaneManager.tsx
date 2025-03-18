@@ -12,10 +12,7 @@ export type PaneType = {
   title: string;
   isOpen: boolean;
   type: string;
-  history: {
-    command: string;
-    output: React.ReactElement;
-  }[];
+  history: React.ReactElement[];
 };
 
 export function PaneManager() {
@@ -25,25 +22,22 @@ export function PaneManager() {
       isOpen: true,
       type: "shell",
       history: [
-        { command: "graph", output: <Graph /> },
-        {
-          command: "help",
-          output: (
-            <>
-              <span>Available commands: </span>
-              <span className="dark:text-dark-bright-black text-light-bright-black">
-                posts, graph, about, contact
-              </span>
-            </>
-          ),
-        },
+        <div key={0}>$ graph</div>,
+        <Graph key={1} />,
+        <span key={2}>Available commands: </span>,
+        <span
+          key={3}
+          className="dark:text-dark-bright-black text-light-bright-black"
+        >
+          posts, graph, about, contact
+        </span>,
       ],
     },
     {
       title: "harriknight/all-posts",
       isOpen: true,
       type: "shell",
-      history: [{ command: "posts", output: <PostList /> }],
+      history: [<div key={0}>$ posts</div>, <PostList key={1} />],
     },
   ];
 
@@ -79,16 +73,19 @@ export function PaneManager() {
     setPanes(nextPanes);
   }
 
-  function updateHistory(
-    position: number,
-    command: string,
-    output: ReactElement,
-  ) {
+  function historyPush(position: number, ...elements: ReactElement[]) {
     const nextPanes = produce(panes, (draft) => {
-      draft[position].history.push({ command, output });
+      draft[position].history.push(...elements);
     });
     setPanes(nextPanes);
   }
+
+  // function historyPop(position: number) {
+  //   const nextPanes = produce(panes, (draft) => {
+  //     draft[position].history.pop();
+  //   });
+  //   setPanes(nextPanes);
+  // }
 
   function clearHistory(position: number) {
     const nextPanes = produce(panes, (draft) => {
@@ -113,10 +110,10 @@ export function PaneManager() {
             <Graph />
           ) : (
             <Shell
-              position={id}
+              panePosition={id}
               onExit={removePane}
               history={panes[id].history}
-              updateHistory={updateHistory}
+              historyPush={historyPush}
               clearHistory={clearHistory}
               isActive={activePaneIndex === id}
             />
