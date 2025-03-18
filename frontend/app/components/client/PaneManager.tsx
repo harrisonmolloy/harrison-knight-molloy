@@ -6,41 +6,19 @@ import { Plus } from "lucide-react";
 import { Pane } from "components/client/Pane";
 import { Graph } from "components/client/Graph";
 import { Shell } from "components/client/Shell";
-import { PostList } from "components/client/PostList";
+
+type PaneManagerProps = {
+  initialPanes: PaneType[];
+};
 
 export type PaneType = {
   title: string;
   isOpen: boolean;
   type: string;
-  initialHistory: React.ReactElement[];
+  startUpCommands: string[];
 };
 
-export function PaneManager() {
-  const initialPanes: PaneType[] = [
-    {
-      title: "/harriknight/graph",
-      isOpen: true,
-      type: "shell",
-      initialHistory: [
-        <div key={0}>$ graph</div>,
-        <Graph key={1} />,
-        <span key={2}>Available commands: </span>,
-        <span
-          key={3}
-          className="dark:text-dark-bright-black text-light-bright-black"
-        >
-          posts, graph, about, contact
-        </span>,
-      ],
-    },
-    {
-      title: "harriknight/all-posts",
-      isOpen: true,
-      type: "shell",
-      initialHistory: [<div key={0}>$ posts</div>, <PostList key={1} />],
-    },
-  ];
-
+export function PaneManager({ initialPanes }: PaneManagerProps) {
   const [panes, setPanes] = useState<PaneType[]>(initialPanes);
   const [activePaneIndex, setActivePaneIndex] = useState(0);
 
@@ -59,7 +37,7 @@ export function PaneManager() {
         title: "/",
         isOpen: true,
         type: "shell",
-        initialHistory: [],
+        startUpCommands: [],
       });
       // note: when postion moves to state remember to add the position here.
     });
@@ -91,7 +69,7 @@ export function PaneManager() {
             <Shell
               onExit={() => removePane(id)}
               isActive={activePaneIndex === id}
-              initialHistory={pane.initialHistory}
+              startUpCommands={pane.startUpCommands}
             />
           )}
         </Pane>

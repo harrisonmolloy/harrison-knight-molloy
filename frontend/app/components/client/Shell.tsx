@@ -10,35 +10,17 @@ import { Graph } from "components/client/Graph";
 type ShellProps = {
   isActive: boolean;
   onExit: () => void;
-  initialHistory: React.ReactElement[];
+  startUpCommands: string[];
 };
 
-export function Shell({ isActive, onExit, initialHistory }: ShellProps) {
-  const [history, setHistory] = useState(initialHistory || []);
+export function Shell({ isActive, onExit, startUpCommands }: ShellProps) {
+  const [history, setHistory] = useState<React.ReactElement[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    if (isActive && inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, [isActive]); // Focus only when isActive changes
-
-  function historyPush(...elements: React.ReactElement[]) {
-    setHistory((previousHistory) => [...previousHistory, ...elements]);
-  }
-
-  // function historyPop() {
-  //   setHistory(previousHistory => previousHistory.slice(0, -1));
-  // }
-
-  function clearHistory() {
-    setHistory([]);
-  }
 
   async function executeCommand(command: string) {
     switch (command.toLowerCase()) {
       case "help":
-        historyPush(
+        appendHistory(
           <p>$ {command}</p>,
           <p>Available commands: graph, posts, about, contact, exit, clear</p>,
         );
@@ -54,20 +36,20 @@ export function Shell({ isActive, onExit, initialHistory }: ShellProps) {
         break;
 
       case "posts":
-        historyPush(<p>$ {command}</p>, <PostList />);
+        appendHistory(<p>$ {command}</p>, <PostList />);
         break;
 
       case "graph":
-        historyPush(<p>$ {command}</p>, <Graph />);
+        appendHistory(<p>$ {command}</p>, <Graph />);
         break;
 
       case "contact":
-        historyPush(<p>$ {command}</p>, <p>mail@harriknight.com</p>);
+        appendHistory(<p>$ {command}</p>, <p>mail@harriknight.com</p>);
         break;
 
       case "about":
         const config = await getConfig();
-        historyPush(
+        appendHistory(
           <p>$ {command}</p>,
           <div className="flex">
             <pre className="text-[5px] leading-[3px]">{ascii}</pre>
@@ -80,7 +62,7 @@ export function Shell({ isActive, onExit, initialHistory }: ShellProps) {
         break;
 
       default:
-        historyPush(
+        appendHistory(
           <p>$ {command}</p>,
           <>
             <p>Command not found: {command}</p>
@@ -90,10 +72,44 @@ export function Shell({ isActive, onExit, initialHistory }: ShellProps) {
     }
   }
 
+  function initHistory() {
+    for (const command of startUpCommands) {
+      executeCommand(command);
+    }
+  }
+
+  // Init history with startup Commands
+  useEffect(() => {
+    initHistory();
+  }, []);
+
+  // Focus input when isActive changes
+  useEffect(() => {
+    if (isActive && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [isActive]);
+
+  function appendHistory(...elements: React.ReactElement[]) {
+    setHistory((previousHistory) => [...previousHistory, ...elements]);
+  }
+
+  // function historyPop() {
+  //   setHistory(previousHistory => previousHistory.slice(0, -1));
+  // }
+
+  function clearHistory() {
+    setHistory([]);
+  }
+
+  function handleSubmit(command: string) {
+    executeCommand(command);
+  }
+
   return (
     <div className="p-2">
-      {...history}
-      <TerminalInput inputRef={inputRef} onSubmit={executeCommand} />
+      {history}
+      <TerminalInput inputRef={inputRef} onSubmit={handleSubmit} />
     </div>
   );
 }
