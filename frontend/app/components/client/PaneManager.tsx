@@ -19,7 +19,7 @@ export type PaneType = {
 };
 
 export function PaneManager() {
-  const [panes, setPanes] = useState<PaneType[]>([
+  const initialPanes: PaneType[] = [
     {
       title: "/harriknight/graph",
       isOpen: true,
@@ -45,7 +45,9 @@ export function PaneManager() {
       type: "shell",
       history: [{ command: "posts", output: <PostList /> }],
     },
-  ]);
+  ];
+
+  const [panes, setPanes] = useState<PaneType[]>(initialPanes);
   const [activePaneIndex, setActivePaneIndex] = useState(0);
 
   function removePane(position: number) {
