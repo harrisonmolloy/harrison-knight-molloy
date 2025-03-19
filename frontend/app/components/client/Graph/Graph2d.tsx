@@ -14,13 +14,13 @@ const ForceGraph2D = dynamic(() => import("react-force-graph-2d"), {
   ssr: false,
 });
 
-type Graph2dPropTypes = { 
+type Graph2dPropTypes = {
   graphData: GraphData;
   isOpen: boolean;
   inline: boolean;
-}
+};
 
-export function Graph2d({ graphData, isOpen, inline}: Graph2dPropTypes) {
+export function Graph2d({ graphData, isOpen, inline }: Graph2dPropTypes) {
   const [size, setSize] = useState({ width: 400, height: 500 });
   const ref = useRef<HTMLDivElement>(null);
   const router = useRouter();
@@ -132,7 +132,10 @@ export function Graph2d({ graphData, isOpen, inline}: Graph2dPropTypes) {
   });
 
   return (
-    <div ref={ref} className={`${inline && "mt-1 h-[60svh] border-y"} ${isOpen || "h-0 w-0 overflow-hidden"}` }>
+    <div
+      ref={ref}
+      className={`${inline && "mt-1 h-[60svh] border-y"} ${isOpen || "h-0 w-0 overflow-hidden"}`}
+    >
       <ForceGraph2D
         graphData={graphData}
         width={size.width}

@@ -36,7 +36,7 @@ export function Pane({
         onClick={onToggle}
         onXClick={onExit}
       />
-      <PaneContentContainer >
+      <PaneContentContainer>
         <PaneContent
           type={type}
           isActive={isActive}

@@ -28,7 +28,7 @@ export function PaneTitle({
   return (
     <div
       onClick={handleClick}
-      className={`z-1 flex p-2 cursor-pointer ${isOpen || "md:h-full md:[writing-mode:vertical-lr]"}`}
+      className={`z-1 flex cursor-pointer p-2 ${isOpen || "md:h-full md:[writing-mode:vertical-lr]"}`}
     >
       <h1>{title}</h1>
       <div className="flex-1"></div>
