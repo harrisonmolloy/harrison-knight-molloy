@@ -1,5 +1,5 @@
 import { Node, Link } from "types/graphDataTypes";
-import { POSTS_AND_TAGS_QUERYResult } from "../types/sanity.types";
+import { POSTS_AND_TAGS_QUERYResult } from "types/sanity.types";
 
 export function transformGraphData({
   tags,

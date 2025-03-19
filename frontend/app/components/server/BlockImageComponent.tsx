@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import { POSTS_QUERYResult } from "lib/sanity.types";
+import { POSTS_QUERYResult } from "types/sanity.types";
 
 export function BlockImageComponent({
   blockImage,

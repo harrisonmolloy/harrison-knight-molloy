@@ -1,4 +1,4 @@
-import { Node, Link } from "lib/graphDataTypes";
+import { Node, Link } from "types/graphDataTypes";
 import { getPosts, getTags } from "lib/getFunctions";
 
 export async function getGraphData() {

@@ -1,5 +1,5 @@
 import { BlockList } from "components/server/BlockList";
-import { POSTS_QUERYResult } from "lib/sanity.types";
+import { POSTS_QUERYResult } from "types/sanity.types";
 
 export function BlockAccordian({
   post,
