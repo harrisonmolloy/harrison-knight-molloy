@@ -1,17 +1,26 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
-import { useRouter } from "next/navigation";
+
 import dynamic from "next/dynamic";
-import { GraphData } from "lib/graphDataTypes";
+import { useRouter } from "next/navigation";
+
 import { NodeObject } from "react-force-graph-2d";
+
+import { GraphData } from "types/graphDataTypes";
 
 // Hold off rendering component until window is defined.
 const ForceGraph2D = dynamic(() => import("react-force-graph-2d"), {
   ssr: false,
 });
 
-export function Graph2d({ graphData }: { graphData?: GraphData }) {
+type Graph2dPropTypes = { 
+  graphData: GraphData;
+  isOpen: boolean;
+  inline: boolean;
+}
+
+export function Graph2d({ graphData, isOpen, inline}: Graph2dPropTypes) {
   const [size, setSize] = useState({ width: 400, height: 500 });
   const ref = useRef<HTMLDivElement>(null);
   const router = useRouter();
@@ -123,7 +132,7 @@ export function Graph2d({ graphData }: { graphData?: GraphData }) {
   });
 
   return (
-    <div ref={ref} className="mt-1 h-[60svh] border-y">
+    <div ref={ref} className={`${inline && "mt-1 h-[60svh] border-y"} ${isOpen || "h-0 w-0 overflow-hidden"}` }>
       <ForceGraph2D
         graphData={graphData}
         width={size.width}

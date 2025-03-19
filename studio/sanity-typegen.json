@@ -1,5 +1,5 @@
 {
   "path": ["../frontend/app/**/*.{ts,tsx,js,jsx}", "./schemaTypes"],
   "schema": "schema.json",
-  "generates": "../frontend/app/lib/sanity.types.ts"
+  "generates": "../frontend/app/types/sanity.types.ts"
 }

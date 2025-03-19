@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import { transformGraphData } from "./TransformGraphData";
+import { transformGraphData } from "lib/TransformGraphData";
 
 import * as query from "lib/queries";
 import { fetcher, fetcherWithParam } from "lib/swrFunctions";

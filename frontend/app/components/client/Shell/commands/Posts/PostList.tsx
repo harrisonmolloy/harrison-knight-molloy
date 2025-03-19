@@ -1,8 +1,8 @@
 "use client";
 
-import { usePosts } from "@/app/lib/dataHooks";
-import { POSTS_QUERYResult } from "@/app/lib/sanity.types";
-import { Post } from "components/client/Post";
+import { usePosts } from "hooks/dataHooks";
+import { POSTS_QUERYResult } from "types/sanity.types";
+import { Post } from "components/client/Shell/commands/Posts/Post";
 
 export function PostList() {
   const { posts, error, isLoading } = usePosts();

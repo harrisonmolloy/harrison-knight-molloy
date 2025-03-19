@@ -1,11 +1,12 @@
 "use client";
 
+import { ViewMoreButton } from "components/server/ViewMoreButton";
+import { Article } from "components/server/Article";
+import { BlockAccordian } from "components/server/BlockAccordian";
+import { Row } from "components/server/Row";
 import Link from "next/link";
 import { useState } from "react";
-import { Article } from "components/server/Article";
-import { Row } from "components/server/Row";
-import { BlockAccordian } from "components/server/BlockAccordian";
-import { POSTS_QUERYResult } from "lib/sanity.types";
+import { POSTS_QUERYResult } from "types/sanity.types";
 
 type PostProps = { post: POSTS_QUERYResult[0] };
 
@@ -44,30 +45,9 @@ export function Post({ post }: PostProps) {
         ))}
       </Row>
       <BlockAccordian post={post} isOpen={isOpen} />
-      <ViewMoreRow post={post} isOpen={isOpen} onClick={handleClick} />
+      <Row justify>
+        <ViewMoreButton post={post} isOpen={isOpen} onClick={handleClick} />
+      </Row>
     </Article>
-  );
-}
-
-function ViewMoreRow({
-  post,
-  isOpen,
-  onClick,
-}: {
-  post: POSTS_QUERYResult[0];
-  isOpen: boolean;
-  onClick: () => void;
-}) {
-  if (post.body.length < 2) return <></>;
-
-  return (
-    <Row justify>
-      <button
-        onClick={onClick}
-        className="cursor-pointer text-light-blue underline dark:text-dark-blue"
-      >
-        {isOpen ? "Close" : "View More"}
-      </button>
-    </Row>
   );
 }

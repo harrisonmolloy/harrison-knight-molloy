@@ -1,13 +1,13 @@
 "use client";
 
-import { RefObject, useState } from "react";
+import { useState } from "react";
 
-type TerminalInputProps = {
-  inputRef: RefObject<HTMLInputElement | null>;
+type ShellInputPropTypes = {
+  inputRef: React.RefObject<HTMLInputElement | null>;
   onSubmit: (command: string) => void;
 };
 
-export function TerminalInput({ onSubmit, inputRef }: TerminalInputProps) {
+export function ShellInput({ onSubmit, inputRef }: ShellInputPropTypes) {
   const [command, setCommand] = useState("");
 
   function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
@@ -15,10 +15,6 @@ export function TerminalInput({ onSubmit, inputRef }: TerminalInputProps) {
       onSubmit(command);
       setCommand("");
     }
-  }
-
-  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
-    setCommand(event.target.value);
   }
 
   return (
@@ -29,7 +25,7 @@ export function TerminalInput({ onSubmit, inputRef }: TerminalInputProps) {
         type="text"
         name="Terminal Input"
         value={command}
-        onChange={handleChange}
+        onChange={(e) => setCommand(e.target.value)}
         onKeyDown={handleKeyDown}
         className="ml-2 w-full max-w-full text-wrap outline-0"
         autoFocus
