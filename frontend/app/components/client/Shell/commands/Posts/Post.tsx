@@ -13,10 +13,6 @@ type PostProps = { post: POSTS_QUERYResult[0] };
 export function Post({ post }: PostProps) {
   const [isOpen, setIsOpen] = useState(false);
 
-  function handleClick() {
-    setIsOpen(!isOpen);
-  }
-
   let date;
   if (post.date) {
     date = new Date(post.date).toLocaleDateString();
@@ -46,7 +42,11 @@ export function Post({ post }: PostProps) {
       </Row>
       <BlockAccordian post={post} isOpen={isOpen} />
       <Row justify>
-        <ViewMoreButton post={post} isOpen={isOpen} onClick={handleClick} />
+        <ViewMoreButton
+          post={post}
+          isOpen={isOpen}
+          onClick={() => setIsOpen(!isOpen)}
+        />
       </Row>
     </Article>
   );

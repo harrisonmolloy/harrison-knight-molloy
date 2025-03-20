@@ -2,17 +2,10 @@
 
 import { Plus } from "lucide-react";
 
-import { useSetImmerAtom } from "jotai-immer";
-import { DEFAULT_PANE, panesAtom } from "store/atoms";
+import { usePanes } from "hooks/usePanes";
 
 export function AddPaneButton() {
-  const setPanes = useSetImmerAtom(panesAtom);
-
-  const appendPane = () => {
-    setPanes((draft) => {
-      draft.push(DEFAULT_PANE);
-    });
-  };
+  const { appendPane } = usePanes();
 
   return (
     <button

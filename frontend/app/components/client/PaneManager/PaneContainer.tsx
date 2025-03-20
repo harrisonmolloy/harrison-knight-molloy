@@ -1,7 +1,6 @@
 "use client";
 
-import { useImmerAtom } from "jotai-immer";
-import { panesAtom } from "store/atoms";
+import { usePanes } from "hooks/usePanes";
 
 type PaneContainerPropTypes = {
   children: React.ReactNode;
@@ -9,20 +8,17 @@ type PaneContainerPropTypes = {
 };
 
 export function PaneContainer({ children, paneId }: PaneContainerPropTypes) {
-  const [panes, setPanes] = useImmerAtom(panesAtom);
+  const { panes, activePaneId, setActivePane } = usePanes();
+  const { isOpen, isActive } = panes[paneId];
 
-  const setActivePane = () => {
-    setPanes((draft) => {
-      for (let i = 0; i < draft.length; i++) {
-        draft[i].isActive = i === paneId;
-      }
-    });
-  };
+  const borderStyles = `
+  border border-light-fg dark:border-dark-fg ${paneId < activePaneId && "border-b-0 md:border md:border-r-0"} ${paneId > activePaneId && "border-t-0 md:border md:border-l-0"}`;
 
   return (
     <section
-      onClick={setActivePane}
-      className={`flex ${panes[paneId].isOpen && "flex-1"} flex-col overflow-hidden border border-light-fg dark:border-dark-fg ${paneId && "border-t-0 md:border md:border-l-0"}`}
+      onClick={() => setActivePane(paneId)}
+      onMouseOver={() => setActivePane(paneId)}
+      className={`flex flex-col overflow-hidden border border-light-fg transition duration-500 ease-in-out dark:border-dark-fg ${borderStyles} ${isOpen && "flex-1"} ${!isActive && "opacity-55"}`}
     >
       {children}
     </section>

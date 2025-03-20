@@ -2,15 +2,16 @@
 
 import { Shell } from "components/client/Shell/Shell";
 import { Graph } from "components/client/Graph/Graph";
-import { useAtomValue } from "jotai";
-import { panesAtom } from "store/atoms";
+
+import { usePanes } from "hooks/usePanes";
 
 export type PaneContentPropTypes = {
   paneId: number;
 };
 
 export function PaneContent({ paneId }: PaneContentPropTypes) {
-  const { type } = useAtomValue(panesAtom)[paneId];
+  const { panes } = usePanes();
+  const { type } = panes[paneId];
 
   switch (type) {
     case "graph":

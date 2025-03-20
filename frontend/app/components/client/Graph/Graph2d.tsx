@@ -7,8 +7,8 @@ import dynamic from "next/dynamic";
 import { NodeObject } from "react-force-graph-2d";
 
 import { GraphData } from "types/graphDataTypes";
-import { useAtomValue } from "jotai";
-import { panesAtom } from "store/atoms";
+
+import { usePanes } from "hooks/usePanes";
 
 // Hold off rendering component until window is defined.
 const ForceGraph2D = dynamic(() => import("react-force-graph-2d"), {
@@ -22,7 +22,7 @@ type Graph2dPropTypes = {
 };
 
 export function Graph2d({ graphData, paneId, inline }: Graph2dPropTypes) {
-  const panes = useAtomValue(panesAtom);
+  const { panes } = usePanes();
   const { isOpen = false } = panes[paneId];
 
   const [size, setSize] = useState({ width: 400, height: 500 });

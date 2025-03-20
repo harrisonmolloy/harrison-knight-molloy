@@ -1,34 +1,34 @@
 "use client";
 
+import { useShell } from "hooks/useShell";
 import { useState } from "react";
 
 type ShellInputPropTypes = {
+  paneId: number;
   inputRef: React.RefObject<HTMLInputElement | null>;
-  onSubmit: (command: string) => void;
 };
 
-export function ShellInput({ onSubmit, inputRef }: ShellInputPropTypes) {
+export function ShellInput({ paneId, inputRef }: ShellInputPropTypes) {
   const [command, setCommand] = useState("");
-
-  function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
-    if (event.key === "Enter") {
-      onSubmit(command);
-      setCommand("");
-    }
-  }
+  const { submitCommand } = useShell();
 
   return (
     <div className="flex">
       <span>$</span>
       <input
         ref={inputRef}
+        // autoFocus
         type="text"
         name="Terminal Input"
         value={command}
-        onChange={(e) => setCommand(e.target.value)}
-        onKeyDown={handleKeyDown}
         className="ml-2 w-full max-w-full text-wrap outline-0"
-        autoFocus
+        onChange={(e) => setCommand(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            submitCommand(paneId, command);
+            setCommand("");
+          }
+        }}
       />
     </div>
   );

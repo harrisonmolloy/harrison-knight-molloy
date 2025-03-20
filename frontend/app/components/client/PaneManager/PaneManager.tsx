@@ -3,11 +3,10 @@
 import { Pane } from "components/client/PaneManager/Pane";
 import { AddPaneButton } from "components/client/PaneManager/AddPaneButton";
 
-import { useAtomValue } from "jotai";
-import { panesAtom } from "store/atoms";
+import { usePanes } from "hooks/usePanes";
 
 export function PaneManager() {
-  const panes = useAtomValue(panesAtom);
+  const { panes } = usePanes();
 
   return (
     <>

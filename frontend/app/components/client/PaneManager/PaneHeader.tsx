@@ -2,43 +2,31 @@
 
 import { X } from "lucide-react";
 
-import { useImmerAtom } from "jotai-immer";
-import { panesAtom } from "store/atoms";
+import { usePanes } from "hooks/usePanes";
 
 export type PaneHeaderPropTypes = {
   paneId: number;
 };
 
 export function PaneHeader({ paneId }: PaneHeaderPropTypes) {
-  const [panes, setPanes] = useImmerAtom(panesAtom);
-
-  const togglePane = () => {
-    setPanes((draft) => {
-      draft[paneId].isOpen = !draft[paneId].isOpen;
-    });
-  };
-
-  const removePane = () => {
-    setPanes((draft) => {
-      draft.splice(paneId, 1);
-    });
-  };
+  const { panes, togglePane, removePane } = usePanes();
+  const { isOpen, title } = panes[paneId];
 
   return (
     <div
       onClick={(e) => {
         e.stopPropagation();
-        togglePane();
+        togglePane(paneId);
       }}
-      className={`z-1 flex cursor-pointer p-2 ${panes[paneId].isOpen || "md:h-full md:[writing-mode:vertical-lr]"}`}
+      className={`z-1 flex cursor-pointer p-2 ${isOpen || "md:h-full md:[writing-mode:vertical-lr]"}`}
     >
-      <h1>{panes[paneId].title}</h1>
+      <h1>{title}</h1>
       <div className="flex-1"></div>
       <button
         className="cursor-pointer"
         onClick={(e) => {
           e.stopPropagation();
-          removePane();
+          removePane(paneId);
         }}
       >
         <X size={16} strokeWidth={1.75} />
