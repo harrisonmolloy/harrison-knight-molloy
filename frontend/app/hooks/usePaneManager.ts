@@ -22,6 +22,7 @@ export function usePaneManager(initialPanes: PaneType[]) {
         isOpen: true,
         isActive: false,
         type: "shell",
+        history: [],
       });
     });
     setPanes(nextPanes);

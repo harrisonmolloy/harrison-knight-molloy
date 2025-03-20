@@ -1,19 +1,28 @@
-import { useState } from "react";
+import { useAtom } from "jotai";
+import { panesAtom } from "store/atoms";
 
-export function useHistory() {
-  const [history, setHistory] = useState<React.ReactElement[]>([]);
+export function useHistory(id: number) {
+  const [panes, setPanes] = useAtom(panesAtom);
 
-  function appendHistory(...elements: React.ReactElement[]) {
-    setHistory((previousHistory) => [...previousHistory, ...elements]);
-  }
+  const appendHistory = (...elements: React.ReactElement[]) => {
+    setPanes((draft) => {
+      draft[id].history.push(...elements);
+    });
+  };
 
-  function historyPop() {
-    setHistory((previousHistory) => previousHistory.slice(0, -1));
-  }
+  const historyPop = () => {
+    setPanes((draft) => {
+      draft[id].history.pop();
+    });
+  };
 
-  function clearHistory() {
-    setHistory([]);
-  }
+  const clearHistory = () => {
+    setPanes((draft) => {
+      draft[id].history = [];
+    });
+  };
+
+  const history = panes[id].history;
 
   return { history, appendHistory, historyPop, clearHistory };
 }

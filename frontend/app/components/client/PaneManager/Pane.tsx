@@ -1,49 +1,20 @@
 "use client";
 
-import { PaneContainer } from "components/client/PaneManager/PaneContainer";
-import { PaneTitle } from "components/client/PaneManager/PaneTitle";
-import { PaneContentContainer } from "components/client/PaneManager/PaneContentContainer";
-import { PaneContent } from "components/client/PaneManager/PaneContent";
+import { PaneContainer } from "./PaneContainer";
+import { PaneHeader } from "./PaneHeader";
+import { PaneContentContainer } from "./PaneContentContainer";
+import { PaneContent } from "./PaneContent";
 
 type PanePropTypes = {
-  id: number;
-  title: string;
-  type: string;
-  isActive: boolean;
-  isOpen: boolean;
-  onExit: () => void;
-  onToggle: () => void;
-  onClick: () => void;
-  startUpCommands?: string[];
+  paneId: number;
 };
 
-export function Pane({
-  id,
-  title,
-  type,
-  isActive,
-  isOpen,
-  startUpCommands,
-  onToggle,
-  onExit,
-  onClick,
-}: PanePropTypes) {
+export function Pane({ paneId }: PanePropTypes) {
   return (
-    <PaneContainer id={id} isOpen={isOpen} onClick={onClick}>
-      <PaneTitle
-        title={title}
-        isOpen={isOpen}
-        onClick={onToggle}
-        onXClick={onExit}
-      />
+    <PaneContainer paneId={paneId}>
+      <PaneHeader paneId={paneId} />
       <PaneContentContainer>
-        <PaneContent
-          type={type}
-          isActive={isActive}
-          isOpen={isOpen}
-          onExit={onExit}
-          startUpCommands={startUpCommands}
-        />
+        <PaneContent paneId={paneId} />
       </PaneContentContainer>
     </PaneContainer>
   );

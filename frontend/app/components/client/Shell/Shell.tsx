@@ -12,23 +12,42 @@ import { Graph } from "components/client/Graph/Graph";
 import { ascii } from "lib/ascii";
 import { getConfig } from "lib/getFunctions";
 
-import { useHistory } from "hooks/useHistory";
+import { panesAtom } from "store/atoms";
+import { useAtomValue } from "jotai";
+import { useSetImmerAtom } from "jotai-immer";
 
 type ShellPropTypes = {
-  isActive: boolean;
-  isOpen: boolean;
-  startUpCommands: string[];
-  onExit: () => void;
+  paneId: number;
 };
 
-export function Shell({
-  isActive,
-  isOpen,
-  onExit,
-  startUpCommands = [],
-}: ShellPropTypes) {
-  const { history, appendHistory, clearHistory } = useHistory();
+export function Shell({ paneId }: ShellPropTypes) {
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const {
+    isActive,
+    isOpen,
+    startUpCommands = [],
+    history,
+  } = useAtomValue(panesAtom)[paneId];
+  const setPanes = useSetImmerAtom(panesAtom);
+
+  const appendHistory = (...elements: React.ReactElement[]) => {
+    setPanes((draft) => {
+      draft[paneId].history.push(...elements);
+    });
+  };
+
+  const clearHistory = () => {
+    setPanes((draft) => {
+      draft[paneId].history = [];
+    });
+  };
+
+  const removePane = () => {
+    setPanes((draft) => {
+      draft.splice(paneId, 1);
+    });
+  };
 
   // Focus input when shell becomes active
   useEffect(() => {
@@ -54,7 +73,7 @@ export function Shell({
         break;
 
       case "exit":
-        onExit();
+        removePane();
         break;
 
       case "clear":
@@ -67,7 +86,10 @@ export function Shell({
         break;
 
       case "graph":
-        appendHistory(<p>$ {command}</p>, <Graph inline={true} />);
+        appendHistory(
+          <p>$ {command}</p>,
+          <Graph paneId={paneId} inline={true} />,
+        );
         break;
 
       case "contact":

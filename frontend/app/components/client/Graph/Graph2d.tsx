@@ -3,11 +3,12 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 
 import dynamic from "next/dynamic";
-import { useRouter } from "next/navigation";
 
 import { NodeObject } from "react-force-graph-2d";
 
 import { GraphData } from "types/graphDataTypes";
+import { useAtomValue } from "jotai";
+import { panesAtom } from "store/atoms";
 
 // Hold off rendering component until window is defined.
 const ForceGraph2D = dynamic(() => import("react-force-graph-2d"), {
@@ -16,14 +17,16 @@ const ForceGraph2D = dynamic(() => import("react-force-graph-2d"), {
 
 type Graph2dPropTypes = {
   graphData: GraphData;
-  isOpen: boolean;
+  paneId: number;
   inline: boolean;
 };
 
-export function Graph2d({ graphData, isOpen, inline }: Graph2dPropTypes) {
+export function Graph2d({ graphData, paneId, inline }: Graph2dPropTypes) {
+  const panes = useAtomValue(panesAtom);
+  const { isOpen = false } = panes[paneId];
+
   const [size, setSize] = useState({ width: 400, height: 500 });
   const ref = useRef<HTMLDivElement>(null);
-  const router = useRouter();
 
   function handleResize() {
     if (
@@ -38,14 +41,11 @@ export function Graph2d({ graphData, isOpen, inline }: Graph2dPropTypes) {
     }
   }
 
-  const handleClick = useCallback(
-    (node: NodeObject) => {
-      if (node.slug) {
-        router.push("/posts/" + node.slug);
-      }
-    },
-    [router],
-  );
+  const handleClick = useCallback((node: NodeObject) => {
+    if (node.slug) {
+      console.log("clicked node.slug:", node.slug);
+    }
+  }, []);
 
   function getColorVar(str: string) {
     // console.log("getting col", getComputedStyle(document.body));
@@ -134,7 +134,7 @@ export function Graph2d({ graphData, isOpen, inline }: Graph2dPropTypes) {
   return (
     <div
       ref={ref}
-      className={`${inline && "mt-1 h-[60svh] border-y"} ${isOpen || "h-0 w-0 overflow-hidden"}`}
+      className={`${inline && "mt-1 h-[60svh] border-y"} ${!isOpen && "h-0 w-0 overflow-hidden"}`}
     >
       <ForceGraph2D
         graphData={graphData}

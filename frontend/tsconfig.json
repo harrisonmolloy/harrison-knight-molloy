@@ -23,6 +23,7 @@
       "lib/*": ["./app/lib/*"],
       "types/*": ["./app/types/*"],
       "hooks/*": ["./app/hooks/*"],
+      "store/*": ["./app/store/*"],
       "@/*": ["./*"],
       "app/*": ["./app/*"]
     }

@@ -5,6 +5,8 @@ import type { Viewport } from "next";
 import { Container } from "components/server/Container";
 import localFont from "next/font/local";
 
+import { Providers } from "components/client/Providers/Providers";
+
 // Font files can be colocated inside of `app`
 const sf_mono = localFont({
   src: "./fonts/SF-Mono-Regular.otf",
@@ -39,9 +41,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${sf_mono.variable}`}>
       <body>
-        <Container>{children}</Container>
-        <Analytics />
-        <SpeedInsights />
+        <Providers>
+          <Container>{children}</Container>
+          <Analytics />
+          <SpeedInsights />
+        </Providers>
       </body>
     </html>
   );

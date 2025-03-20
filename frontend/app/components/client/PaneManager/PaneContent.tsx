@@ -2,34 +2,21 @@
 
 import { Shell } from "components/client/Shell/Shell";
 import { Graph } from "components/client/Graph/Graph";
+import { useAtomValue } from "jotai";
+import { panesAtom } from "store/atoms";
 
 export type PaneContentPropTypes = {
-  type: string;
-  isActive: boolean;
-  isOpen: boolean;
-  startUpCommands?: string[];
-  onExit: () => void;
+  paneId: number;
 };
 
-export function PaneContent({
-  type,
-  isActive,
-  isOpen,
-  onExit,
-  startUpCommands = [],
-}: PaneContentPropTypes) {
+export function PaneContent({ paneId }: PaneContentPropTypes) {
+  const { type } = useAtomValue(panesAtom)[paneId];
+
   switch (type) {
     case "graph":
-      return <Graph isOpen={isOpen} />;
+      return <Graph paneId={paneId} inline={false} />;
 
     default:
-      return (
-        <Shell
-          onExit={onExit}
-          isActive={isActive}
-          isOpen={isOpen}
-          startUpCommands={startUpCommands}
-        />
-      );
+      return <Shell paneId={paneId} />;
   }
 }

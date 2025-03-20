@@ -1,22 +1,28 @@
 "use client";
 
+import { useImmerAtom } from "jotai-immer";
+import { panesAtom } from "store/atoms";
+
 type PaneContainerPropTypes = {
   children: React.ReactNode;
-  id: number;
-  isOpen: boolean;
-  onClick: () => void;
+  paneId: number;
 };
 
-export function PaneContainer({
-  children,
-  id,
-  isOpen,
-  onClick,
-}: PaneContainerPropTypes) {
+export function PaneContainer({ children, paneId }: PaneContainerPropTypes) {
+  const [panes, setPanes] = useImmerAtom(panesAtom);
+
+  const setActivePane = () => {
+    setPanes((draft) => {
+      for (let i = 0; i < draft.length; i++) {
+        draft[i].isActive = i === paneId;
+      }
+    });
+  };
+
   return (
     <section
-      onClick={onClick}
-      className={`flex ${isOpen && "flex-1"} flex-col overflow-hidden border border-light-fg dark:border-dark-fg ${id && "border-t-0 md:border md:border-l-0"}`}
+      onClick={setActivePane}
+      className={`flex ${panes[paneId].isOpen && "flex-1"} flex-col overflow-hidden border border-light-fg dark:border-dark-fg ${paneId && "border-t-0 md:border md:border-l-0"}`}
     >
       {children}
     </section>
