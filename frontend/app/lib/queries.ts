@@ -50,6 +50,27 @@ export const POST_QUERY = defineQuery(`*[_type == "post" && _id == $postId]{
     }
   }`);
 
+export const POST_BY_ID_QUERY =
+  defineQuery(`*[_type == "post" && _id == $postId][0]{
+    _id,
+    _type,
+    title,
+    date,
+    body[] {
+      ...,
+      asset-> {
+        ...,
+        "_key": _id
+      }
+    },
+    tags[]-> {
+      _id,
+      _type,
+      title,
+      slug
+    }
+  }`);
+
 export const TAGS_QUERY = defineQuery(`*[_type == "tag"] {
       _id,
       _type,

@@ -8,23 +8,18 @@ import { NodeObject } from "react-force-graph-2d";
 
 import { GraphData } from "types/graphDataTypes";
 
-import { usePanes } from "hooks/usePanes";
-
 // Hold off rendering component until window is defined.
 const ForceGraph2D = dynamic(() => import("react-force-graph-2d"), {
   ssr: false,
 });
 
 type Graph2dPropTypes = {
-  graphData: GraphData;
-  paneId: number;
+  paneId?: number;
   inline: boolean;
+  graphData: GraphData;
 };
 
-export function Graph2d({ graphData, paneId, inline }: Graph2dPropTypes) {
-  const { panes } = usePanes();
-  const { isOpen = false } = panes[paneId];
-
+export function Graph2d({ graphData, inline }: Graph2dPropTypes) {
   const [size, setSize] = useState({ width: 400, height: 500 });
   const ref = useRef<HTMLDivElement>(null);
 
@@ -134,7 +129,7 @@ export function Graph2d({ graphData, paneId, inline }: Graph2dPropTypes) {
   return (
     <div
       ref={ref}
-      className={`${inline && "mt-1 h-[60svh] border-y"} ${!isOpen && "h-0 w-0 overflow-hidden"}`}
+      className={`${inline ? "h-[60svh] border-y" : "flex-1 overflow-hidden"}`}
     >
       <ForceGraph2D
         graphData={graphData}

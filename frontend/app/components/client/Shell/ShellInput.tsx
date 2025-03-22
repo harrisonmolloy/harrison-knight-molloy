@@ -1,7 +1,8 @@
 "use client";
 
-import { useShell } from "hooks/useShell";
-import { useState } from "react";
+import { useCommands } from "hooks/useCommands";
+import { usePanes } from "hooks/usePanes";
+import { useCallback, useEffect, useState } from "react";
 
 type ShellInputPropTypes = {
   paneId: number;
@@ -10,7 +11,30 @@ type ShellInputPropTypes = {
 
 export function ShellInput({ paneId, inputRef }: ShellInputPropTypes) {
   const [command, setCommand] = useState("");
-  const { submitCommand } = useShell();
+  const { panes } = usePanes();
+  const { executeCommand } = useCommands(paneId);
+
+  const runStartupCommands = useCallback(async () => {
+    if (panes[paneId].commandQueue) {
+      const startUpCommands = panes[paneId].commandQueue;
+      for (const command of startUpCommands) {
+        await executeCommand(command);
+      }
+    }
+  }, []);
+
+  const handleEnter = async (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" && inputRef.current) {
+      inputRef.current.disabled = true;
+      await executeCommand(command);
+      inputRef.current.disabled = false;
+      setCommand("");
+    }
+  };
+
+  useEffect(() => {
+    runStartupCommands();
+  }, [runStartupCommands]);
 
   return (
     <div className="flex">
@@ -23,12 +47,7 @@ export function ShellInput({ paneId, inputRef }: ShellInputPropTypes) {
         value={command}
         className="ml-2 w-full max-w-full text-wrap outline-0"
         onChange={(e) => setCommand(e.target.value)}
-        onKeyDown={(e) => {
-          if (e.key === "Enter") {
-            submitCommand(paneId, command);
-            setCommand("");
-          }
-        }}
+        onKeyDown={handleEnter}
       />
     </div>
   );

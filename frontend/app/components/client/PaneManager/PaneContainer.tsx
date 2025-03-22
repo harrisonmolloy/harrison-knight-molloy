@@ -8,11 +8,11 @@ type PaneContainerPropTypes = {
 };
 
 export function PaneContainer({ children, paneId }: PaneContainerPropTypes) {
-  const { panes, activePaneId, setActivePane } = usePanes();
+  const { panes, getActivePaneId, setActivePane } = usePanes();
   const { isOpen, isActive } = panes[paneId];
 
   const borderStyles = `
-  border border-light-fg dark:border-dark-fg ${paneId < activePaneId && "border-b-0 md:border md:border-r-0"} ${paneId > activePaneId && "border-t-0 md:border md:border-l-0"}`;
+  border border-light-fg dark:border-dark-fg ${paneId < getActivePaneId() && "border-b-0 md:border md:border-r-0"} ${paneId > getActivePaneId() && "border-t-0 md:border md:border-l-0"}`;
 
   return (
     <section

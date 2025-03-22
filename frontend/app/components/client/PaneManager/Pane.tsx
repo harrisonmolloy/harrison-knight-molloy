@@ -13,7 +13,7 @@ export function Pane({ paneId }: PanePropTypes) {
   return (
     <PaneContainer paneId={paneId}>
       <PaneHeader paneId={paneId} />
-      <PaneContentContainer>
+      <PaneContentContainer paneId={paneId}>
         <PaneContent paneId={paneId} />
       </PaneContentContainer>
     </PaneContainer>

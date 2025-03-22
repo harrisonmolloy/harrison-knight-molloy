@@ -48,13 +48,27 @@ export function useGraphData() {
 }
 
 export function usePost(postId: string) {
+  console.log(postId);
   const { data, error, isLoading } = useSWR(
-    [query.POST_QUERY, postId],
+    [query.POST_QUERY, { postId }],
     fetcherWithParam,
   );
   return {
     post: data,
-    error: error,
+    error,
+    isLoading,
+  };
+}
+
+export function usePostById(postId: string) {
+  console.log(postId);
+  const { data, error, isLoading } = useSWR(
+    [query.POST_BY_ID_QUERY, { postId }],
+    fetcherWithParam,
+  );
+  return {
+    post: data,
+    error,
     isLoading,
   };
 }

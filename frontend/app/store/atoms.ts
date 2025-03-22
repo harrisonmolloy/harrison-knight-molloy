@@ -3,28 +3,29 @@ import { atom } from "jotai";
 import { PaneType } from "types/paneType";
 
 export const DEFAULT_PANE = {
-  title: "/",
+  title: "/shell",
   isOpen: true,
   isActive: false,
   type: "shell",
   history: [],
+  commandQueue: [],
 };
 
 export const INITIAL_PANES: PaneType[] = [
   {
-    title: "/harriknight/graph",
+    title: "/shell",
     isOpen: true,
     isActive: true,
     type: "shell",
-    startUpCommands: ["graph", "help"],
+    commandQueue: ["about", "help"],
     history: [],
   },
   {
-    title: "harriknight/all-posts",
+    title: "graph",
     isOpen: true,
     isActive: false,
-    type: "shell",
-    startUpCommands: ["posts"],
+    type: "graph",
+    commandQueue: ["posts"],
     history: [],
   },
 ];

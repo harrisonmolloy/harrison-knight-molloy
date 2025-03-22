@@ -14,7 +14,6 @@ type ShellPropTypes = {
 
 export function Shell({ paneId }: ShellPropTypes) {
   const inputRef = useRef<HTMLInputElement>(null);
-  // const { submitCommand } = useShell()
   const { panes } = usePanes();
   const { isActive } = panes[paneId];
 
@@ -25,16 +24,17 @@ export function Shell({ paneId }: ShellPropTypes) {
     }
   }, [isActive]);
 
-  // // Handle startup commands
-  // useEffect(() => {
-  //   for (const command of startUpCommands) {
-  //     submitCommand(paneId, command);
-  //   }
-  // }, []);
-  // }
+  // Add a click handler to the container
+  const handleContainerClick = () => {
+    setTimeout(() => {
+      if (inputRef.current) {
+        inputRef.current.focus();
+      }
+    }, 10);
+  };
 
   return (
-    <ShellContainer paneId={paneId}>
+    <ShellContainer paneId={paneId} onClick={handleContainerClick}>
       <ShellOutput paneId={paneId} />
       <ShellInput paneId={paneId} inputRef={inputRef} />
     </ShellContainer>

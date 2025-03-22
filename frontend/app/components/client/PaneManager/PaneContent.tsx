@@ -15,7 +15,7 @@ export function PaneContent({ paneId }: PaneContentPropTypes) {
 
   switch (type) {
     case "graph":
-      return <Graph paneId={paneId} inline={false} />;
+      return <Graph paneId={paneId} />;
 
     default:
       return <Shell paneId={paneId} />;

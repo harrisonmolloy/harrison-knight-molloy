@@ -1,82 +1,86 @@
-import { getConfig } from "lib/getFunctions";
-import { usePanes } from "./usePanes";
-import { ascii } from "lib/ascii";
-import { Graph } from "components/client/Graph/Graph";
-import { PostList } from "components/client/Shell/commands/Posts/PostList";
+import { useSetImmerAtom } from "jotai-immer";
+import { panesAtom } from "store/atoms";
+import { usePanes } from "hooks/usePanes";
+import { Spinner } from "components/Spinner";
 
-export const useShell = () => {
+export const useShell = (paneId: number) => {
   const {
-    // panes,
-    // activePaneId,
-    clearHistory,
-    removePane,
-    // appendPane,
-    // togglePane,
-    appendHistory,
-    // setActivePane,
+    panes,
+    togglePane: togglePaneId,
+    removePane: removePaneId,
+    clearHistory: clearHistoryId,
+    appendPane,
   } = usePanes();
+  const setPanes = useSetImmerAtom(panesAtom);
 
-  async function submitCommand(paneId: number, command: string) {
-    switch (command.toLowerCase()) {
-      case "help":
-        appendHistory(
-          paneId,
-          <p>$ {command}</p>,
-          <p>Available commands: graph, posts, about, contact, exit, clear</p>,
-        );
-        break;
+  const printLine = (...elements: React.ReactNode[]) => {
+    setPanes((draft) => {
+      draft[paneId].history.push(...elements);
+    });
+  };
 
-      case "posts":
-        appendHistory(paneId, <p>$ {command}</p>, <PostList />);
-        break;
+  const printCommand = (command: string) => {
+    setPanes((draft) => {
+      draft[paneId].history.push(`$ ${command}`);
+    });
+  };
 
-      case "graph":
-        appendHistory(
-          paneId,
-          <p>$ {command}</p>,
-          <Graph paneId={paneId} inline={true} />,
-        );
-        break;
+  const printLineBreak = () => {
+    setPanes((draft) => {
+      draft[paneId].history.push(<br />);
+    });
+  };
 
-      case "contact":
-        appendHistory(paneId, <p>$ {command}</p>, <p>mail@harriknight.com</p>);
-        break;
+  const showSpinner = (message?: string) => {
+    setPanes((draft) => {
+      draft[paneId].history.push(<Spinner message={message} />);
+    });
+  };
 
-      case "about":
-        const config = await getConfig();
-        appendHistory(
-          paneId,
-          <p>$ {command}</p>,
-          <div className="flex">
-            <pre className="text-[5px] leading-[3px]">{ascii}</pre>
-            <div className="ml-1">
-              <p>Title: {config?.title}</p>
-              <p>Description: {config?.description}</p>
-            </div>
-          </div>,
-        );
-        break;
+  const popLine = (n = 1) => {
+    setPanes((draft) => {
+      while (n > 0) {
+        draft[paneId].history.pop();
+        n--;
+      }
+    });
+  };
 
-      case "exit":
-        removePane(paneId);
-        break;
+  const delay = async (ms: number) => {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  };
 
-      case "clear":
-      case "clr":
-        clearHistory(paneId);
-        break;
+  const togglePane = () => {
+    togglePaneId(paneId);
+  };
 
-      default:
-        appendHistory(
-          paneId,
-          <p>$ {command}</p>,
-          <p>Command not found: {command}</p>,
-          <p>Try: graph, posts, about, contact, exit, clear</p>,
-        );
+  const removePane = () => {
+    removePaneId(paneId);
+  };
+
+  const clearHistory = async () => {
+    const historyLength = panes[paneId].history.length;
+
+    for (let i = 0; i <= historyLength; i++) {
+      showSpinner("clearing history");
+      await delay(10);
+      popLine(2);
     }
-  }
+  };
 
   return {
-    submitCommand,
+    printLine,
+    printCommand,
+    printLineBreak,
+    showSpinner,
+    popLine,
+    togglePane,
+    togglePaneId,
+    removePane,
+    removePaneId,
+    clearHistory,
+    clearHistoryId,
+    appendPane,
+    delay,
   };
 };

@@ -3,6 +3,6 @@ export type PaneType = {
   title: string;
   isOpen: boolean;
   isActive: boolean;
-  startUpCommands?: string[];
-  history: React.ReactElement[];
+  commandQueue: string[];
+  history: React.ReactNode[];
 };
