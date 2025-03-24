@@ -9,17 +9,14 @@ import { usePostWithId } from "hooks/commands/usePostWithId";
 import { useGraph } from "hooks/commands/useGraph";
 import { useContact } from "hooks/commands/useContact";
 import { usePanes } from "./usePanes";
-
-type CommandHandler = (
-  command: string,
-  ...args: string[]
-) => number | Promise<number>;
-
-interface Commands {
-  [alias: string]: CommandHandler;
-}
+import { useEffect, useRef, useState } from "react";
 
 export const useCommands = (paneId: number) => {
+  const isRunningRef = useRef(false);
+  const isInitiatedRef = useRef(false);
+  const { panes } = usePanes();
+  const [commandQueue, setCommandQueue] = useState<string[]>([]);
+
   const { help } = useHelp(paneId);
   const { unknown } = useUnknown(paneId);
   const { close } = useClose(paneId);
@@ -30,8 +27,6 @@ export const useCommands = (paneId: number) => {
   const { postWithId } = usePostWithId(paneId);
   const { graph } = useGraph(paneId);
   const { contact } = useContact(paneId);
-
-  const { panes, shiftCommand, appendCommand } = usePanes();
 
   const commands: Commands = {
     exit: exit,
@@ -61,20 +56,37 @@ export const useCommands = (paneId: number) => {
   };
 
   function submitCommand(command: string) {
-    appendCommand(paneId, command);
+    // append command to queue
+    setCommandQueue([...commandQueue, command]);
   }
 
-  async function triggerExecute() {
-    // while commands in queue
-    while (panes[paneId].commandQueue.length > 0) {
-      await executeCommand(shiftCommand(paneId));
+  // put intial panes into commad queue if they exit and it is the first time running
+  useEffect(() => {
+    if (!isInitiatedRef.current && panes[paneId].commandQueue.length > 0) {
+      setCommandQueue([...panes[paneId].commandQueue]);
+      isInitiatedRef.current = true;
     }
-  }
+  }, [panes, paneId]);
+
+  useEffect(() => {
+    // on each render check if
+    if (!isRunningRef.current && commandQueue.length > 0) {
+      const nextCommand = commandQueue[0];
+      isRunningRef.current = true;
+      executeCommand(nextCommand).then(() => {
+        // shift command queue
+        // // which triggers a re-render
+        setCommandQueue(commandQueue.slice(1));
+        isRunningRef.current = false;
+      });
+    }
+  });
 
   async function executeCommand(command: string) {
     const [cmd, ...args] = command.trim().toLowerCase().split(/\s+/);
     let cmdCpy = cmd.slice();
 
+    //
     if (!commands[cmdCpy]) cmdCpy = "unknown";
 
     // run commandHandler
@@ -82,5 +94,14 @@ export const useCommands = (paneId: number) => {
     return status;
   }
 
-  return { submitCommand, triggerExecute, executeCommand };
+  return { submitCommand };
 };
+
+type CommandHandler = (
+  command: string,
+  ...args: string[]
+) => number | Promise<number>;
+
+interface Commands {
+  [alias: string]: CommandHandler;
+}
