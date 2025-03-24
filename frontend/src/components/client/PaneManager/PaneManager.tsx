@@ -1,7 +1,7 @@
 "use client";
 
-import { Pane } from "components/client/PaneManager/Pane";
-import { AddPaneButton } from "components/client/PaneManager/AddPaneButton";
+import { Pane } from "./Pane";
+import { AddPaneButton } from "./AddPaneButton";
 
 import { usePanes } from "hooks/usePanes";
 

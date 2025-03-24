@@ -1,8 +1,9 @@
 "use client";
 
-import { usePostById } from "hooks/dataHooks";
-import { Post } from "components/client/Shell/commands/Posts/Post";
+import { Post } from "./Post";
 import { Spinner } from "components/Spinner";
+
+import { usePostById } from "hooks/dataHooks";
 
 export function PostWithId({ postId }: { postId: string }) {
   const { post, error, isLoading } = usePostById(postId);

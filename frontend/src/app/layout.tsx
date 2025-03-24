@@ -1,15 +1,17 @@
-import { Analytics } from "@vercel/analytics/next";
-import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
 import type { Viewport } from "next";
-import { Container } from "components/server/Container";
+
 import localFont from "next/font/local";
 
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+
 import { Providers } from "components/client/Providers/Providers";
+import { Container } from "components/server/Container";
 
 // Font files can be colocated inside of `app`
 const sf_mono = localFont({
-  src: "./fonts/SF-Mono-Regular.otf",
+  src: "./fonts/sf-mono-regular.otf",
   display: "swap",
   weight: "400",
   variable: "--font-sf-mono",

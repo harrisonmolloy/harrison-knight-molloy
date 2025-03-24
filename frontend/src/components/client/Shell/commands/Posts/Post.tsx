@@ -1,11 +1,14 @@
 "use client";
 
+import Link from "next/link";
+
+import { useState } from "react";
+
 import { ViewMoreButton } from "components/server/ViewMoreButton";
 import { Article } from "components/server/Article";
 import { BlockAccordian } from "components/server/BlockAccordian";
 import { Row } from "components/server/Row";
-import Link from "next/link";
-import { useState } from "react";
+
 import { POSTS_QUERYResult } from "types/sanity.types";
 
 type PostProps = { post: POSTS_QUERYResult[0] };
