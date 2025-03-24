@@ -1,7 +1,7 @@
 "use client";
 
-import { usePanes } from "hooks/usePanes";
 import { useEffect, useRef } from "react";
+import { usePanes } from "hooks/usePanes";
 
 export type PaneContentContainerPropTypes = {
   children: React.ReactNode;

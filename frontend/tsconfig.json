@@ -19,13 +19,13 @@
       }
     ],
     "paths": {
-      "components/*": ["./app/components/*"],
-      "lib/*": ["./app/lib/*"],
-      "types/*": ["./app/types/*"],
-      "hooks/*": ["./app/hooks/*"],
-      "store/*": ["./app/store/*"],
-      "@/*": ["./*"],
-      "app/*": ["./app/*"]
+      "app/*": ["./src/app/*"],
+      "components/*": ["./src/components/*"],
+      "lib/*": ["./src/lib/*"],
+      "types/*": ["./src/types/*"],
+      "hooks/*": ["./src/hooks/*"],
+      "store/*": ["./src/store/*"],
+      "@/*": ["./*"]
     }
   },
   "include": [

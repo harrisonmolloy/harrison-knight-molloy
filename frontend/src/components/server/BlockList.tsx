@@ -1,6 +1,6 @@
 import { PortableText } from "@portabletext/react";
-import { POSTS_QUERYResult } from "types/sanity.types";
 import { BlockImageComponent } from "components/server/BlockImageComponent";
+import { POSTS_QUERYResult } from "types/sanity.types";
 
 const componentTypes = {
   types: {
