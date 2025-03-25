@@ -9,13 +9,11 @@ export function Row({
 }) {
   if (justify)
     return (
-      <div
-        className={"mb-1 flex flex-wrap justify-between gap-x-2 " + className}
-      >
+      <div className={"flex flex-wrap justify-between gap-x-2 " + className}>
         {children}
       </div>
     );
   return (
-    <div className={"mb-1 flex flex-wrap gap-x-2 " + className}>{children}</div>
+    <div className={"flex flex-wrap gap-x-2 " + className}>{children}</div>
   );
 }

@@ -5,11 +5,13 @@ import { useAbout } from "hooks/commands/useAbout";
 import { useExit } from "hooks/commands/useExit";
 import { useClear } from "hooks/commands/useClear";
 import { usePostList } from "hooks/commands/usePostList";
-import { usePostWithId } from "hooks/commands/usePostWithId";
+// import { usePostWithId } from "hooks/commands/usePostWithId";
 import { useGraph } from "hooks/commands/useGraph";
 import { useContact } from "hooks/commands/useContact";
 import { usePanes } from "./usePanes";
 import { useEffect, useRef, useState } from "react";
+import { usePosts } from "./commands/usePosts";
+import { usePost } from "./commands/usePost";
 
 export const useCommands = (paneId: number) => {
   const isRunningRef = useRef(false);
@@ -24,9 +26,11 @@ export const useCommands = (paneId: number) => {
   const { exit } = useExit(paneId);
   const { clear } = useClear(paneId);
   const { postList } = usePostList(paneId);
-  const { postWithId } = usePostWithId(paneId);
+  // const { postWithId } = usePostWithId(paneId);
   const { graph } = useGraph(paneId);
   const { contact } = useContact(paneId);
+  const { posts } = usePosts(paneId);
+  const { post } = usePost(paneId);
 
   const commands: Commands = {
     exit: exit,
@@ -42,9 +46,11 @@ export const useCommands = (paneId: number) => {
     about: about,
 
     postList: postList,
-    posts: postList,
+    allPosts: postList,
 
-    post: postWithId,
+    posts: posts,
+
+    post: post,
 
     graph: graph,
 

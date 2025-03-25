@@ -14,7 +14,7 @@ export async function getTags() {
 }
 
 export async function getPost(postId: string) {
-  return await client.fetch(query.POST_QUERY, { postId });
+  return await client.fetch(query.POST_BY_ID_QUERY, { postId });
 }
 
 export async function getPostsByTag(tagName: string) {

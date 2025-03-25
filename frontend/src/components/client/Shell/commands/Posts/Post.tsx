@@ -11,10 +11,11 @@ import { Row } from "components/server/Row";
 
 import { POSTS_QUERYResult } from "types/sanity.types";
 
-type PostProps = { post: POSTS_QUERYResult[0] };
+type PostProps = { post: POSTS_QUERYResult[0]; loadOpen?: boolean };
 
-export function Post({ post }: PostProps) {
-  const [isOpen, setIsOpen] = useState(false);
+export function Post({ post, loadOpen = false }: PostProps) {
+  const [isOpen, setIsOpen] = useState(loadOpen);
+  console.log(post);
 
   let date;
   if (post.date) {
@@ -33,6 +34,7 @@ export function Post({ post }: PostProps) {
         <p className="text-light-bright-magenta dark:text-dark-bright-magenta">
           {"--tags "}
         </p>
+
         {post.tags?.map((tag) => (
           <Link
             className="text-light-bright-magenta dark:text-dark-bright-magenta"

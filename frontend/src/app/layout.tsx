@@ -9,7 +9,6 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Providers } from "components/client/Providers/Providers";
 import { Container } from "components/server/Container";
 
-// Font files can be colocated inside of `app`
 const sf_mono = localFont({
   src: "./fonts/sf-mono-regular.otf",
   display: "swap",

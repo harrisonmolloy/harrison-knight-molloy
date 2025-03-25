@@ -13,11 +13,11 @@ export const DEFAULT_PANE = {
 
 export const INITIAL_PANES: PaneType[] = [
   {
-    title: "/shell",
-    isOpen: true,
+    title: "/shell/help",
+    isOpen: false,
     isActive: true,
     type: "shell",
-    commandQueue: ["about", "help"],
+    commandQueue: ["help"],
     history: [],
   },
   {

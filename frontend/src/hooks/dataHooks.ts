@@ -73,14 +73,14 @@ export function usePostById(postId: string) {
   };
 }
 
-export function usePostByTag(tag: string) {
+export function usePostByTag(tagName: string) {
   const { data, error, isLoading } = useSWR(
-    [query.POSTS_BY_TAGS_QUERY, tag],
+    [query.POSTS_BY_TAGS_QUERY, { tagName }],
     fetcherWithParam,
   );
   return {
-    post: data,
-    error: error,
+    posts: data,
+    error,
     isLoading,
   };
 }

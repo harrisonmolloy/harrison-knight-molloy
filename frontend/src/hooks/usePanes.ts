@@ -1,6 +1,7 @@
 import { useImmerAtom } from "jotai-immer";
 import { createElement } from "react";
 import { DEFAULT_PANE, panesAtom } from "store/atoms";
+import { PaneType } from "types/paneType";
 
 export const usePanes = () => {
   const [panes, setPanes] = useImmerAtom(panesAtom);
@@ -35,7 +36,7 @@ export const usePanes = () => {
     });
   };
 
-  const appendPane = (pane = DEFAULT_PANE) => {
+  const appendPane = (pane: PaneType = DEFAULT_PANE) => {
     setPanes((draft) => {
       draft.push(pane);
       // set all panes to inactive
