@@ -86,24 +86,24 @@ export const TAGS_QUERY = defineQuery(`*[_type == "tag"] {
 
 export const POSTS_BY_TAGS_QUERY = defineQuery(
   `*[_type == "post" && references(*[_type=="tag" && title match $tagName]._id)] {
+    _id,
+    _type,
+    title,
+    date,
+    body[] {
+      ...,
+      asset-> {
+        ...,
+        "_key": _id
+      }
+    },
+    tags[]-> {
       _id,
       _type,
       title,
-      date,
-      body[] {
-        ...,
-        asset-> {
-          ...,
-          "_key": _id
-        }
-      },
-      tags[]-> {
-        _id,
-        _type,
-        title,
-        slug
-      }
-    }`,
+      slug
+    }
+  }`,
 );
 
 export const POSTS_AND_TAGS_QUERY = defineQuery(

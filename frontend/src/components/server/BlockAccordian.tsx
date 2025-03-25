@@ -14,5 +14,9 @@ export function BlockAccordian({
     return <BlockList blocks={post.body.slice(0, 1)} />;
   }
 
-  return <BlockList blocks={post.body} />;
+  return (
+    <div className="flex flex-col gap-y-2">
+      <BlockList blocks={post.body} />
+    </div>
+  );
 }
