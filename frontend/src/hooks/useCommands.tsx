@@ -66,7 +66,7 @@ export const useCommands = (paneId: number) => {
     setCommandQueue([...commandQueue, command]);
   }
 
-  // put intial panes into commad queue if they exit and it is the first time running
+  // put intial panes into command queue if they exit and it is the first time running
   useEffect(() => {
     if (!isInitiatedRef.current && panes[paneId].commandQueue.length > 0) {
       setCommandQueue([...panes[paneId].commandQueue]);
@@ -92,7 +92,6 @@ export const useCommands = (paneId: number) => {
     const [cmd, ...args] = command.trim().toLowerCase().split(/\s+/);
     let cmdCpy = cmd.slice();
 
-    //
     if (!commands[cmdCpy]) cmdCpy = "unknown";
 
     // run commandHandler
