@@ -16,7 +16,6 @@ export function PaneContainer({ children, paneId }: PaneContainerPropTypes) {
 
   return (
     <section
-      onClick={() => setActivePane(paneId)}
       onMouseOver={() => setActivePane(paneId)}
       className={`flex flex-col overflow-hidden border border-light-fg transition duration-500 ease-in-out dark:border-dark-fg ${borderStyles} ${isOpen && "flex-1"} ${!isActive && "opacity-55"}`}
     >

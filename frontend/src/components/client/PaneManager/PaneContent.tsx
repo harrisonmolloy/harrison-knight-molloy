@@ -7,9 +7,10 @@ import { usePanes } from "hooks/usePanes";
 
 export type PaneContentPropTypes = {
   paneId: number;
+  inputRef?: React.RefObject<HTMLInputElement | null>;
 };
 
-export function PaneContent({ paneId }: PaneContentPropTypes) {
+export function PaneContent({ paneId, inputRef }: PaneContentPropTypes) {
   const { panes } = usePanes();
   const { type } = panes[paneId];
 
@@ -18,6 +19,8 @@ export function PaneContent({ paneId }: PaneContentPropTypes) {
       return <Graph paneId={paneId} />;
 
     default:
-      return <Shell paneId={paneId} />;
+      if (inputRef) {
+        return <Shell paneId={paneId} inputRef={inputRef} />;
+      }
   }
 }

@@ -24,7 +24,6 @@ export function ShellInput({ paneId, inputRef }: ShellInputPropTypes) {
       <span>$</span>
       <input
         ref={inputRef}
-        // autoFocus
         type="text"
         name="Terminal Input"
         value={command}

@@ -1,32 +1,24 @@
 "use client";
 
-import { useEffect, useRef } from "react";
 import { usePanes } from "hooks/usePanes";
 
 export type PaneContentContainerPropTypes = {
   children: React.ReactNode;
   paneId: number;
+  inputRef: React.RefObject<HTMLInputElement | null>;
 };
 
 export function PaneContentContainer({
   children,
   paneId,
+  inputRef,
 }: PaneContentContainerPropTypes) {
-  const ref = useRef<HTMLDivElement>(null);
-
   const { panes } = usePanes();
   const { isOpen } = panes[paneId];
 
-  // match terminal style auto scroll behaviour
-  useEffect(() => {
-    if (ref.current) {
-      ref.current.scrollTop = ref.current.scrollHeight;
-    }
-  }, [panes]);
-
   return (
     <div
-      ref={ref}
+      onClick={() => inputRef.current?.focus()}
       className={`flex flex-1 flex-col overflow-y-scroll ${isOpen && "p-2"}`}
     >
       {children}
