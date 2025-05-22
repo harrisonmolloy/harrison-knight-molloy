@@ -13,7 +13,7 @@ const ForceGraph2D = dynamic(() => import("react-force-graph-2d"), {
 });
 
 type Graph2dPropTypes = {
-  paneId?: number;
+  paneId: number;
   inline: boolean;
   graphData: GraphData;
 };
@@ -27,11 +27,13 @@ export function Graph2d({ graphData, inline, paneId }: Graph2dPropTypes) {
     drawPointerArea,
     handleNodeClick,
   } = useForceGraph2d();
+  const { panes } = usePanes();
+  const { isOpen } = panes[paneId];
 
   return (
     <div
       ref={wrapperRef}
-      className={`${inline ? "h-[60svh] border-y" : "flex-1 overflow-hidden"}`}
+      className={`${isOpen ? "flex-1" : "h-0 w-0 overflow-hidden"} ${inline && "h-[60svh] border-y"}`}
     >
       <ForceGraph2D
         graphData={graphData}
