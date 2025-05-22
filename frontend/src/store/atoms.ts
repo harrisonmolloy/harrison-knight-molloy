@@ -2,7 +2,7 @@ import { atom } from "jotai";
 
 import { PaneType } from "types/paneType";
 
-export const DEFAULT_PANE = {
+export const DEFAULT_PANE: PaneType = {
   title: "/shell",
   isOpen: true,
   isActive: false,
