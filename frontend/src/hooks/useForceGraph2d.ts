@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { NodeObject } from "react-force-graph-2d";
+import { usePanes } from "hooks/usePanes";
 
 export const useForceGraph2d = () => {
+  const { appendPane } = usePanes();
   const [size, setSize] = useState({ width: 400, height: 500 });
   const wrapperRef = useRef<HTMLDivElement>(null);
 
@@ -102,5 +104,29 @@ export const useForceGraph2d = () => {
     }
   }
 
-  return { wrapperRef, size, drawLinkColor, drawNode, drawPointerArea };
+  const handleNodeClick = (node: NodeObject) => {
+    let command;
+    if (node.type == "post") {
+      command = `${node.type} ${node.id}`;
+    } else {
+      command = `posts --tag ${node.name.toLowerCase()}`;
+    }
+    appendPane({
+      title: `shell/`,
+      isOpen: true,
+      isActive: false,
+      type: "shell",
+      history: [],
+      commandQueue: [command],
+    });
+  };
+
+  return {
+    wrapperRef,
+    size,
+    drawLinkColor,
+    drawNode,
+    drawPointerArea,
+    handleNodeClick,
+  };
 };
